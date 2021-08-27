@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 
 import { HomeTemplate } from "./templates/HomeTemplate/HomeTemplate";
 import LoadingComponent from "./components/GlobalSetting/LoadingComponent/LoadingComponent";

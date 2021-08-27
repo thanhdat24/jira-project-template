@@ -1,4 +1,7 @@
-import { DiSPLAY_LOADING, HIDE_LOADING } from "../constants/LoadingConst";
+import {
+  DiSPLAY_LOADING,
+  HIDE_LOADING,
+} from "../constants/Loading/LoadingConst";
 
 const initialState = {
   isLoading: false,
