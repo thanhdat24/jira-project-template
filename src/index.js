@@ -1,22 +1,24 @@
 import "./index.css";
 import "antd/dist/antd.css";
 
+import { BrowserRouter, Router } from "react-router-dom";
+
 import App from "./App";
-import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import React from "react";
 import ReactDOM from "react-dom";
+import { history } from "./util/history/history";
 import reportWebVitals from "./reportWebVitals";
 import store from "./redux/reducers/configStore";
 
 // setup redux
 
 ReactDOM.render(
-  <BrowserRouter>
+  <Router history={history}>
     <Provider store={store}>
       <App />
     </Provider>
-  </BrowserRouter>,
+  </Router>,
   document.getElementById("root")
 );
 

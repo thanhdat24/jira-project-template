@@ -15,6 +15,7 @@ import {
 } from "redux-saga/effects";
 
 import { cyberbugsService } from "../../../services/CyberbugsService";
+import { history } from "../../../util/history/history";
 
 // Quản lý các action saga
 function* signin(action) {
@@ -36,7 +37,7 @@ function* signin(action) {
       type: USLOGIN,
       userLogin: data.content,
     });
-    let history = yield select((state) => state.HistoryReducer.history);
+    // let history = yield select((state) => state.HistoryReducer.history);
     history.push("/home");
   } catch (err) {
     console.log(err.response.data);
