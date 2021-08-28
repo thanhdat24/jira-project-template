@@ -1,6 +1,8 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 
+import { HistoryReducer } from "./HistoryReducer";
 import LoadingReducer from "./LoadingReducer";
+import { UserLoginCyberBugsReducer } from "./UserCyberBugsReducer";
 import createMiddlewareSaga from "redux-saga";
 import reduxThunk from "redux-thunk";
 import { rootSaga } from "../sagas/rootSaga";
@@ -11,6 +13,8 @@ const middlewareSaga = createMiddlewareSaga();
 const rootReducer = combineReducers({
   // reducer khai báo tại đây
   LoadingReducer,
+  HistoryReducer,
+  UserLoginCyberBugsReducer,
 });
 
 const store = createStore(

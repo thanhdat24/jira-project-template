@@ -18,7 +18,9 @@ function LoginCyberBugs(props) {
         style={{ height: "100vh" }}
       >
         <div className="form__group" style={{ width: "100%" }}>
-          <h3 className="text-center">{props.displayName}</h3>
+          <h3 style={{ fontSize: 35 }} className="text-center">
+            Login CyberBug
+          </h3>
           <div style={{ width: "50%" }} className="mx-auto text-center">
             <Input
               onChange={handleChange}
@@ -67,8 +69,8 @@ const LoginCyberBugsWithFomik = withFormik({
       .email("Email is invalid!"),
     password: Yup.string().min(6, "password must be at least 6 characters"),
   }),
-  handleSubmit: (values, { props, setSubmitting }) => {
-    props.dispatch(siginCyberbugsAction(values.email, values.password));
+  handleSubmit: ({ email, password }, { props, setSubmitting }) => {
+    props.dispatch(siginCyberbugsAction(email, password));
     // console.log(props);
     // console.log(values);
   },
