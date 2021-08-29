@@ -28,6 +28,15 @@ export const cyberbugsService = {
       url: `${DOMAIN_CYBERBUG}/Project/createProjectAuthorize`,
       method: "POST",
       data: newProject,
+      // token yếu cầu từ back-end chứng minh user đã login
+      headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
+    });
+  },
+  getListProject: () => {
+    return Axios({
+      url: `${DOMAIN_CYBERBUG}/Project/getAllProject`,
+      method: "GET",
+      // token yếu cầu từ back-end chứng minh user đã login
       headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
     });
   },

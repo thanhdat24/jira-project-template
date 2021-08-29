@@ -12,6 +12,7 @@ export function* rootSaga() {
     Cyberbugs.theoDoiSignin(),
     ProjectCategory.theoDoigetAllProjectCategory(),
     ProjectSaga.theoDoicreateProjectSaga(),
+    ProjectSaga.theoDoigetListProjectSaga(),
     // Nghiệp vụ ...
   ]);
 }
