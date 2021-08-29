@@ -183,6 +183,7 @@
 
 .main h3 {
   margin-bottom: 20px;
+  letter-spacing: 1px;
 }
 
 .main .info .search-block {
@@ -464,7 +465,7 @@
   font-size: 14px;
 }
 
-/* ----------------------------------- */
+/* ----------- Project settings ------------ */
 .project-settings__form {
   width: 100%;
   max-width: 640px;
@@ -484,6 +485,7 @@
 .project-settings__detail {
   padding: 6px 0px 15px;
   font-size: 24px;
+  letter-spacing: 1px;
 }
 .project-settings__name {
   color: #5e6c84;
@@ -497,4 +499,10 @@
 }
 .project-settings__button {
   font-size: 14px;
+}
+/* ----------- Project management ------------ */
+.project-management__title {
+  margin-top: 34px;
+  font-size: 24px;
+  letter-spacing: 1px;
 }

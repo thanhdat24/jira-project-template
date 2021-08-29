@@ -34,6 +34,17 @@ export default function Menu() {
           <NavLink
             style={{ color: "#000", fontWeight: "bold" }}
             activeStyle={{ color: "rgb(0, 82, 204)" }}
+            to="/projectmanagement"
+            activeClassName="active"
+          >
+            Project Management
+          </NavLink>
+        </div>
+        <div>
+          <i className="fa fa-cog mr-3" />
+          <NavLink
+            style={{ color: "#000", fontWeight: "bold" }}
+            activeStyle={{ color: "rgb(0, 82, 204)" }}
             to="/projectsettings"
             activeClassName="active"
           >

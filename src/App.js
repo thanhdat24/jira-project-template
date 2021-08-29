@@ -9,6 +9,7 @@ import { HomeTemplate } from "./templates/HomeTemplate/HomeTemplate";
 import LoadingComponent from "./components/GlobalSetting/LoadingComponent/LoadingComponent";
 import LoginCyberBugs from "./pages/CyberBugs/LoginCyberBugs/LoginCyberBugs";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
+import ProjectManagement from "./pages/CyberBugs/ProjectManagement/ProjectManagement";
 import ProjectSettings from "./pages/CyberBugs/ProjectSettings/ProjectSettings";
 import { UserLoginTemplate } from "./templates/HomeTemplate/UserLoginTemplate";
 import indexCyberBugs from "./redux/sagas/Cyberbugs/indexCyberBugs";
@@ -27,6 +28,10 @@ function App() {
         <HomeTemplate path="/home" exact Component={Home} />
         <UserLoginTemplate exact path="/login" Component={LoginCyberBugs} />
         <CyberbugsTemplate path="/cyberbugs" Component={indexCyberBugs} />
+        <CyberbugsTemplate
+          path="/projectmanagement"
+          Component={ProjectManagement}
+        />
         <CyberbugsTemplate
           path="/projectsettings"
           Component={ProjectSettings}
