@@ -463,3 +463,38 @@
 .estimate-time {
   font-size: 14px;
 }
+
+/* ----------------------------------- */
+.project-settings__form {
+  width: 100%;
+  max-width: 640px;
+  margin-top: 20px;
+}
+.project-settings__title {
+  color: #5e6c84;
+  font-size: 15px;
+  font-weight: 400;
+}
+.project-settings__symbol {
+  position: relative;
+  top: 2px;
+  margin: 0px 10px;
+  font-size: 18px;
+}
+.project-settings__detail {
+  padding: 6px 0px 15px;
+  font-size: 24px;
+}
+.project-settings__name {
+  color: #5e6c84;
+  font-size: 13px;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+.project-settings__input {
+  background: rgb(244, 245, 247);
+  font-size: 14px;
+}
+.project-settings__button {
+  font-size: 14px;
+}

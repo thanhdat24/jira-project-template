@@ -24,7 +24,7 @@ export default function Menu() {
             style={{ color: "#000", fontWeight: "bold" }}
             activeStyle={{ color: "rgb(0, 82, 204)" }}
             to="/cyberbugs"
-            activeClass="active"
+            activeClassName="active"
           >
             Cyber Board
           </NavLink>
@@ -35,7 +35,7 @@ export default function Menu() {
             style={{ color: "#000", fontWeight: "bold" }}
             activeStyle={{ color: "rgb(0, 82, 204)" }}
             to="/projectsettings"
-            activeClass="active"
+            activeClassName="active"
           >
             Project Settings
           </NavLink>
