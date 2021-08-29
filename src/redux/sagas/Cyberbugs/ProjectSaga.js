@@ -17,7 +17,7 @@ function* createProjectSaga(action) {
   yield delay(500);
   try {
     const { data, status } = yield call(() =>
-      cyberbugsService.createProject(action.newProject)
+      cyberbugsService.createProjectAuthorization(action.newProject)
     );
 
     // Gọi api thành công thì dispatch lên reducer thông qua put
