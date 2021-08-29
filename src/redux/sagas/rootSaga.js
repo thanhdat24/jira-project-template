@@ -1,5 +1,6 @@
 import * as Cyberbugs from "./Cyberbugs/UserCyberbugsSaga";
 import * as ProjectCategory from "./Cyberbugs/ProjectCategorySaga";
+import * as ProjectSaga from "./Cyberbugs/ProjectSaga";
 
 import { all } from "redux-saga/effects";
 
@@ -10,6 +11,7 @@ export function* rootSaga() {
     // Nghiệp vụ theo dỗi các action saga cyberbugs...
     Cyberbugs.theoDoiSignin(),
     ProjectCategory.theoDoigetAllProjectCategory(),
+    ProjectSaga.theoDoicreateProjectSaga(),
     // Nghiệp vụ ...
   ]);
 }

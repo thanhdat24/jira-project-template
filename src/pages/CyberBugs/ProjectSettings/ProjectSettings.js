@@ -1,10 +1,13 @@
 import * as Yup from "yup";
 
+import {
+  CREATE_PROJECT_SAGA,
+  GET_ALL_PROJECT_CATEGORY_SAGA,
+} from "../../../redux/constants/Cyberbugs/Cyberbug";
 import React, { useEffect } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
 
 import { Editor } from "@tinymce/tinymce-react";
-import { GET_ALL_PROJECT_CATEGORY_SAGA } from "../../../redux/constants/Cyberbugs/Cyberbug";
 import { withFormik } from "formik";
 
 function ProjectSettings(props) {
@@ -12,14 +15,22 @@ function ProjectSettings(props) {
     (state) => state.ProjectCategoryReducer.arrProjectCategory
   );
   const dispatch = useDispatch();
-  const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
-    props;
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldValue,
+  } = props;
 
   useEffect(() => {
     dispatch({ type: GET_ALL_PROJECT_CATEGORY_SAGA });
   }, []);
-  const handleEditorChange = (e) => {
-    console.log("Content was updated:", e.target.getContent());
+  const handleEditorChange = (content) => {
+    // console.log("Content was updated:", e.target.getContent());
+    setFieldValue("description", content);
   };
 
   return (
@@ -27,6 +38,7 @@ function ProjectSettings(props) {
       <form
         className="container project-settings__form"
         onSubmit={handleSubmit}
+        onChange={handleChange}
       >
         <div className="project-settings__title">
           Projects<span className="project-settings__symbol">/</span>
@@ -76,7 +88,7 @@ function ProjectSettings(props) {
                   "alignright alignjustify | bullist numlist outdent indent | " +
                   "removeformat | help",
               }}
-              onChange={handleEditorChange}
+              onEditorChange={handleEditorChange}
             />
           </div>
         </div>
@@ -84,6 +96,7 @@ function ProjectSettings(props) {
         <div className="form-group">
           <label className="project-settings__name">Project Category</label>
           <select
+            onChange={handleChange}
             name="categoryId"
             className="form-control project-settings__input"
           >
@@ -108,11 +121,26 @@ function ProjectSettings(props) {
   );
 }
 const projectSettingsForm = withFormik({
-  mapPropsToValues: () => ({}),
+  // thuộc tính enableReinitialize: khi mỗi lần props của redux thay đổi thì nó lặp tức bidding lại giá trị obj
+  enableReinitialize: true,
+  mapPropsToValues: (props) => {
+    return {
+      projectName: "",
+      description: "",
+      categoryId: props.arrProjectCategory[0]?.id,
+    };
+  },
   validationSchema: Yup.object().shape({}),
-  handleSubmit: (values, { props, setSubmitting }) => {},
+  handleSubmit: (values, { props, setSubmitting }) => {
+    props.dispatch({ type: CREATE_PROJECT_SAGA, newProject: values });
+  },
 
   displayName: "projectSettingsFormik",
 })(ProjectSettings);
 
-export default connect()(projectSettingsForm);
+const mapStateToProps = (state) => {
+  return {
+    arrProjectCategory: state.ProjectCategoryReducer.arrProjectCategory,
+  };
+};
+export default connect(mapStateToProps)(projectSettingsForm);

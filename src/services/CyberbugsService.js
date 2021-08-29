@@ -15,4 +15,11 @@ export const cyberbugsService = {
       method: "GET",
     });
   },
+  createProject: (newProject) => {
+    return Axios({
+      url: `${DOMAIN_CYBERBUG}/Project/createProject`,
+      method: "POST",
+      data: newProject,
+    });
+  },
 };
