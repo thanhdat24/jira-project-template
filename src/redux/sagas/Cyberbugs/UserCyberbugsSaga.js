@@ -19,7 +19,6 @@ import { history } from "../../../util/history/history";
 
 // Quản lý các action saga
 function* signin(action) {
-
   yield put({
     type: DiSPLAY_LOADING,
   });
@@ -38,7 +37,7 @@ function* signin(action) {
       userLogin: data.content,
     });
     // let history = yield select((state) => state.HistoryReducer.history);
-    history.push("/home");
+    history.push("/cyberbugs");
   } catch (err) {
     console.log(err.response.data);
   }

@@ -53,11 +53,18 @@ export default function ProjectManagement(props) {
       title: "Id",
       dataIndex: "id",
       key: "id",
+      sorter: (a, b) => a.id - b.id,
+      sortDirections: ["descend"],
     },
     {
       title: "Project Name",
       dataIndex: "projectName",
       key: "projectName",
+      sorter: (a, b) => {
+        let projectName1 = a.projectName?.trim().toLowerCase();
+        let projectName2 = b.projectName?.trim().toLowerCase();
+        return projectName2 < projectName1 ? -1 : 1;
+      },
     },
     // {
     //   title: "description",
@@ -72,12 +79,22 @@ export default function ProjectManagement(props) {
       title: "Category",
       dataIndex: "categoryName",
       key: "categoryName",
+      sorter: (a, b) => {
+        let categoryName1 = a.categoryName?.trim().toLowerCase();
+        let categoryName2 = b.categoryName?.trim().toLowerCase();
+        return categoryName2 < categoryName1 ? -1 : 1;
+      },
     },
     {
       title: "Creator",
       key: "creator",
       render: (text, record, index) => {
         return <Tag color="green">{record.creator?.name}</Tag>;
+      },
+      sorter: (a, b) => {
+        let creator1 = a.creator.name?.trim().toLowerCase();
+        let creator2 = b.creator.name?.trim().toLowerCase();
+        return creator2 < creator1 ? -1 : 1;
       },
     },
     {
