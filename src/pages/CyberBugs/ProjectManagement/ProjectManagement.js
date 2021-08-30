@@ -113,7 +113,7 @@ export default function ProjectManagement(props) {
     },
   ];
   return (
-    <div className="container project-management">
+    <div className="container project-management ">
       <h3 className="project-management__title">Project Management</h3>
       <Space style={{ marginBottom: 16 }}>
         <Button onClick={setAgeSort}>Sort age</Button>

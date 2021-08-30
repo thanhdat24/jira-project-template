@@ -25,7 +25,7 @@ export default function Sidebar() {
     });
   };
   return (
-    <div style={{ zIndex: "100" }}>
+    <div className="sidebar">
       <Sider
         trigger={null}
         collapsible

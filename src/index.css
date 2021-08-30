@@ -87,9 +87,13 @@
 
 /* Menu */
 .menu {
-  height: 100vh;
-  width: 18%;
   background-color: #f4f5f7;
+  z-index: 99;
+  position: fixed;
+  top: 0px;
+  left: 64px;
+  height: 100vh;
+  width: 261px;
 }
 
 .menu .account {
@@ -173,7 +177,7 @@
 }
 
 .main {
-  padding-left: 2%;
+  padding-left: 24%;
 }
 .main .header .breadcrumb {
   margin-bottom: 0;
@@ -226,6 +230,7 @@
 .main .info .text {
   text-align: center;
   line-height: 35px;
+  font-weight: 300;
 }
 
 .main .content {
@@ -241,6 +246,7 @@
   border: none;
   background-color: transparent;
   color: #5e6c84;
+  font-weight: 300;
 }
 
 .main .content .card .list-group {
@@ -251,8 +257,10 @@
   margin: 5px;
 }
 
-.list-group-item p {
-  font-size: 14px;
+.list-group-item p,
+li {
+  font-size: 15px;
+  font-weight: 400;
 }
 
 .list-group-item .block {
@@ -499,9 +507,26 @@
 .project-settings__button {
   font-size: 14px;
 }
+/* ----------- Sidebar ------------ */
+.sidebar {
+  z-index: 100;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  overflow-x: hidden;
+  height: 100vh;
+}
+
 /* ----------- Project management ------------ */
+.project-management {
+  margin-left: 24%;
+}
 .project-management__title {
   margin-top: 34px;
   font-size: 24px;
   letter-spacing: 1px;
+}
+
+.project-settings {
+  margin-left: 22%;
 }
