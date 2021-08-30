@@ -1,33 +1,60 @@
-import React from "react";
+import {
+  BarsOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  PlusOutlined,
+  QuestionCircleOutlined,
+  SearchOutlined,
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+} from "@ant-design/icons";
+import { Layout, Menu } from "antd";
 
+import React from "react";
+import { useState } from "react";
+
+const { Header, Sider, Content } = Layout;
 export default function Sidebar() {
+  const [state, setState] = useState({
+    collapsed: false,
+  });
+  const toggle = () => {
+    setState({
+      collapsed: !state.collapsed,
+    });
+  };
   return (
-    //   Sider Bar
-    <div className="sideBar">
-      <div className="sideBar-top">
-        <div className="sideBar-icon">
-          <i className="fab fa-jira" />
+    <div style={{ zIndex: "100" }}>
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={state.collapsed}
+        style={{ height: "100%" }}
+      >
+        <div className="text-center" onClick={toggle}>
+          <BarsOutlined
+            style={{
+              cursor: "pointer",
+              color: "#fff",
+              fontSize: 25,
+              marginTop: 20,
+            }}
+          />
         </div>
-        <div
-          className="sideBar-icon"
-          data-toggle="modal"
-          data-target="#searchModal"
-          style={{ cursor: "pointer" }}
-        >
-          <i className="fa fa-search" />
-          <span className="title">SEARCH ISSUES</span>
-        </div>
-        <div className="sideBar-icon">
-          <i className="fa fa-plus" />
-          <span className="title">CREATE ISSUES</span>
-        </div>
-      </div>
-      <div className="sideBar-bottom">
-        <div className="sideBar-icon">
-          <i className="fa fa-question-circle" />
-          <span className="title">ABOUT</span>
-        </div>
-      </div>
+        <div className="logo" />
+        <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+          <Menu.Item key="1" icon={<SearchOutlined style={{ fontSize: 20 }} />}>
+            Search issues
+          </Menu.Item>
+          <Menu.Item key="2" icon={<PlusOutlined style={{ fontSize: 20 }} />}>
+            Create Issue
+          </Menu.Item>
+          <Menu.Item key="3" icon={<QuestionCircleOutlined />}>
+            About
+          </Menu.Item>
+        </Menu>
+      </Sider>
     </div>
   );
 }
