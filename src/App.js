@@ -4,6 +4,7 @@ import { BrowserRouter, Router, Switch, useHistory } from "react-router-dom";
 import React, { Fragment, useEffect } from "react";
 
 import { CyberbugsTemplate } from "./templates/HomeTemplate/CyberbugsTemplate";
+import DrawerCyberBugs from "./HOC/Modal/DrawerCyberBugs";
 import Home from "./pages/CyberBugs/Home/Home";
 import { HomeTemplate } from "./templates/HomeTemplate/HomeTemplate";
 import LoadingComponent from "./components/GlobalSetting/LoadingComponent/LoadingComponent";
@@ -24,6 +25,7 @@ function App() {
   return (
     <Fragment>
       <LoadingComponent />
+      <DrawerCyberBugs />
       <Switch>
         <HomeTemplate path="/home" exact Component={Home} />
         <UserLoginTemplate exact path="/login" Component={LoginCyberBugs} />

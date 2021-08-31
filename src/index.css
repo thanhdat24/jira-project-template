@@ -530,3 +530,7 @@ li {
 .project-settings {
   margin-left: 22%;
 }
+/* ----------- FormEditProject ------------ */
+.FormEdit-Project label {
+  font-weight: bold;
+}
