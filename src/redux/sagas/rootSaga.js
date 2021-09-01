@@ -10,10 +10,11 @@ export function* rootSaga() {
   yield all([
     // Nghiệp vụ theo dỗi các action saga cyberbugs...
     Cyberbugs.theoDoiSignin(),
-    ProjectCategory.theoDoigetAllProjectCategory(),
-    ProjectSaga.theoDoicreateProjectSaga(),
-    ProjectSaga.theoDoigetListProjectSaga(),
-    ProjectSaga.theoDoiupdateProjectSaga(),
+    ProjectCategory.theoDoiGetAllProjectCategory(),
+    ProjectSaga.theoDoiCreateProjectSaga(),
+    ProjectSaga.theoDoiGetListProjectSaga(),
+    ProjectSaga.theoDoiUpdateProjectSaga(),
+    ProjectSaga.theoDoiDeleteProjectSaga(),
     // Nghiệp vụ ...
   ]);
 }

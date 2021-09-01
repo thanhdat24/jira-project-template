@@ -52,6 +52,7 @@ function FormEditProject(props) {
             name="id"
             type="text"
             className="form-control"
+            onChange={handleChange}
           />
         </div>
         <div className="col-4">
@@ -67,6 +68,7 @@ function FormEditProject(props) {
         <div className="col-4">
           <label>Project category</label>
           <select
+            onChange={handleChange}
             className="form-control"
             name="categoryId"
             value={values.categoryId}

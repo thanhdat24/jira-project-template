@@ -1,9 +1,10 @@
-import { Button, Space, Table, Tag } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Button, Popconfirm, Space, Table, Tag, message } from "antd";
 import {
+  DELETE_PROJECT_SAGA,
   EDIT_PROJECT,
   GET_LIST_PROJECT_SAGA,
 } from "../../../redux/constants/Cyberbugs/Cyberbug";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -114,7 +115,7 @@ export default function ProjectManagement(props) {
                 Component: <FormEditProject />,
               };
               dispatch(action);
-              // dispatch dưx liệu dòng hiện tại lên reducer
+              // dispatch dữ liệu dòng hiện tại lên reducer
               const actionEditProject = {
                 type: EDIT_PROJECT,
                 projectEditModal: record,
@@ -125,9 +126,18 @@ export default function ProjectManagement(props) {
           >
             <EditOutlined />
           </button>
-          <button className="btn  btn-danger">
-            <DeleteOutlined />
-          </button>
+          <Popconfirm
+            title="Are you sure to delete this project?"
+            onConfirm={() => {
+              dispatch({ type: DELETE_PROJECT_SAGA, projectId: record.id });
+            }}
+            okText="Yes"
+            cancelText="No"
+          >
+            <button className="btn btn-danger">
+              <DeleteOutlined />
+            </button>
+          </Popconfirm>
         </Space>
       ),
     },

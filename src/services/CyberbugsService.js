@@ -49,4 +49,12 @@ export const cyberbugsService = {
       headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
     });
   },
+  deleteProject: (id) => {
+    return Axios({
+      url: `${DOMAIN_CYBERBUG}/Project/deleteProject?projectId=${id}`,
+      method: "DELETE",
+      // token yếu cầu từ back-end chứng minh user đã login
+      headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
+    });
+  },
 };

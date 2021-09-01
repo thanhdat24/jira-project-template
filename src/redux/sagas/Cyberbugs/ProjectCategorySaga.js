@@ -26,6 +26,6 @@ function* getAllProjectCategory(action) {
     console.log(err.response.data);
   }
 }
-export function* theoDoigetAllProjectCategory() {
+export function* theoDoiGetAllProjectCategory() {
   yield takeLatest(GET_ALL_PROJECT_CATEGORY_SAGA, getAllProjectCategory);
 }
