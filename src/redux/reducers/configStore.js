@@ -4,7 +4,8 @@ import { DrawerReducer } from "./DrawerReducer";
 import { HistoryReducer } from "./HistoryReducer";
 import LoadingReducer from "./LoadingReducer";
 import { ProjectCategoryReducer } from "./ProjectCategoryReducer";
-import { ProjectManagementReducer } from "./ProjectManagement";
+import { ProjectEditReducer } from "./ProjectEditReducer";
+import { ProjectManagementReducer } from "./ProjectManagementReducer";
 import { UserLoginCyberBugsReducer } from "./UserCyberBugsReducer";
 import createMiddlewareSaga from "redux-saga";
 import reduxThunk from "redux-thunk";
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   ProjectCategoryReducer,
   ProjectManagementReducer,
   DrawerReducer,
+  ProjectEditReducer,
 });
 
 const store = createStore(

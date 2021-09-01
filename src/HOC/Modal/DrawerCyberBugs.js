@@ -25,7 +25,6 @@ export default function DrawerCyberBugs(props) {
   const { visible, componentContent, callBackSubmit } = useSelector(
     (state) => state.DrawerReducer
   );
-  console.log(visible);
 
   const showDrawer = () => {
     dispatch({ type: OPEN_DRAWER });
@@ -35,7 +34,6 @@ export default function DrawerCyberBugs(props) {
   };
   return (
     <Fragment>
-      <button onClick={showDrawer}>Open</button>
       <Drawer
         title="Create a new account"
         width={720}

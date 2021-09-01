@@ -40,4 +40,13 @@ export const cyberbugsService = {
       headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
     });
   },
+  updateProject: (projectUpdate) => {
+    return Axios({
+      url: `${DOMAIN_CYBERBUG}/Project/updateProject?projectId=${projectUpdate.id}`,
+      method: "PUT",
+      data: projectUpdate,
+      // token yếu cầu từ back-end chứng minh user đã login
+      headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
+    });
+  },
 };

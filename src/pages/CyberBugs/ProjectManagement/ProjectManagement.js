@@ -1,10 +1,13 @@
 import { Button, Space, Table, Tag } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  EDIT_PROJECT,
+  GET_LIST_PROJECT_SAGA,
+} from "../../../redux/constants/Cyberbugs/Cyberbug";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import FormEditProject from "../../../components/Forms/FormEditProject/FormEditProject";
-import { GET_LIST_PROJECT_SAGA } from "../../../redux/constants/Cyberbugs/Cyberbug";
 import { OPEN_FORM_EDIT_PROJECT } from "../../../redux/constants/Cyberbugs/Cyberbug";
 import ReactHtmlParser from "react-html-parser";
 
@@ -111,6 +114,12 @@ export default function ProjectManagement(props) {
                 Component: <FormEditProject />,
               };
               dispatch(action);
+              // dispatch dưx liệu dòng hiện tại lên reducer
+              const actionEditProject = {
+                type: EDIT_PROJECT,
+                projectEditModal: record,
+              };
+              dispatch(actionEditProject);
             }}
             className="btn btn-primary"
           >

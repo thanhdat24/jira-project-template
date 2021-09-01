@@ -13,6 +13,7 @@ export function* rootSaga() {
     ProjectCategory.theoDoigetAllProjectCategory(),
     ProjectSaga.theoDoicreateProjectSaga(),
     ProjectSaga.theoDoigetListProjectSaga(),
+    ProjectSaga.theoDoiupdateProjectSaga(),
     // Nghiệp vụ ...
   ]);
 }
