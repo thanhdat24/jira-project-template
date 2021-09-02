@@ -1,4 +1,13 @@
-import { Button, Popconfirm, Space, Table, Tag, message } from "antd";
+import {
+  AutoComplete,
+  Avatar,
+  Button,
+  Popconfirm,
+  Popover,
+  Space,
+  Table,
+  Tag,
+} from "antd";
 import {
   DELETE_PROJECT_SAGA,
   EDIT_PROJECT,
@@ -101,6 +110,49 @@ export default function ProjectManagement(props) {
         let creator1 = a.creator.name?.trim().toLowerCase();
         let creator2 = b.creator.name?.trim().toLowerCase();
         return creator2 < creator1 ? -1 : 1;
+      },
+    },
+    {
+      title: "Members",
+      key: "members",
+      render: (text, record, index) => {
+        console.log(record);
+        return (
+          <div>
+            {record.members?.slice(0, 3).map((member, index) => {
+              return <Avatar key={index} src={member.avatar} />;
+            })}
+            {record.members?.length > 3 ? (
+              <Avatar style={{ backgroundColor: "#DDDDDD" }}>...</Avatar>
+            ) : (
+              ""
+            )}
+
+            <Popover
+              placement="bottom"
+              title={"Add member"}
+              content={() => {
+                return <AutoComplete style={{ width: "100%" }} />;
+              }}
+              trigger="click"
+            >
+              <Button
+                style={{ borderRadius: "50%", width: "32px", height: "32px" }}
+              >
+                <span
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  {" "}
+                  +
+                </span>
+              </Button>
+            </Popover>
+          </div>
+        );
       },
     },
     {
