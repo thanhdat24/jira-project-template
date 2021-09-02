@@ -122,7 +122,7 @@ function* deleteProjectSaga(action) {
       notifiFunction("success", "Successfully!");
     }
     yield put({
-      type: "GET_LIST_PROJECT_SAGA",
+      type: GET_LIST_PROJECT_SAGA,
     });
   } catch (err) {
     notifiFunction("error", "Failed!");

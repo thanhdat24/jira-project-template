@@ -1,9 +1,16 @@
 import {
+  ADD_USER_PROJECT_API,
+  GET_LIST_PROJECT_SAGA,
+  GET_USER_API,
+  GET_USER_SEARCH,
+  USER_SIGNIN_API,
+  USLOGIN,
+} from "../../constants/Cyberbugs/Cyberbug";
+import {
   DiSPLAY_LOADING,
   HIDE_LOADING,
 } from "../../constants/Loading/LoadingConst";
 import { TOKEN, USER_LOGIN } from "../../../util/constants/settingSystem";
-import { USER_SIGNIN_API, USLOGIN } from "../../constants/Cyberbugs/Cyberbug";
 import {
   call,
   delay,
@@ -16,8 +23,9 @@ import {
 
 import { cyberbugsService } from "../../../services/CyberbugsService";
 import { history } from "../../../util/history/history";
+import { userService } from "../../../services/UserServices";
 
-// Quản lý các action saga
+// Quản lý SIGNIN
 function* signin(action) {
   yield put({
     type: DiSPLAY_LOADING,
@@ -48,4 +56,45 @@ function* signin(action) {
 
 export function* theoDoiSignin() {
   yield takeLatest(USER_SIGNIN_API, signin);
+}
+// Quản lý GETUSER
+function* getUser(action) {
+  // Gọi api
+  try {
+    const { data, status } = yield call(() =>
+      userService.getUser(action.keyWord)
+    );
+    // console.log("data", data);
+    yield put({
+      type: GET_USER_SEARCH,
+      listUserSearch: data.content,
+    });
+  } catch (err) {
+    console.log(err.response.data);
+  }
+}
+
+export function* theoDoiGetUser() {
+  yield takeLatest(GET_USER_API, getUser);
+}
+
+// Quản lý ADD_USER
+function* addUserProject(action) {
+  console.log(action);
+  // Gọi api
+  try {
+    const { data, status } = yield call(() =>
+      userService.assignUserProject(action.userProject)
+    );
+    // GỌi API LOAD TRANG
+    yield put({
+      type: GET_LIST_PROJECT_SAGA,
+    });
+  } catch (err) {
+    console.log(err.response.data);
+  }
+}
+
+export function* theoDoiAddUserProject() {
+  yield takeLatest(ADD_USER_PROJECT_API, addUserProject);
 }

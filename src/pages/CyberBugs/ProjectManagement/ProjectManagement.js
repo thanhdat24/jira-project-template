@@ -1,4 +1,11 @@
 import {
+  ADD_USER_PROJECT_API,
+  DELETE_PROJECT_SAGA,
+  EDIT_PROJECT,
+  GET_LIST_PROJECT_SAGA,
+  GET_USER_API,
+} from "../../../redux/constants/Cyberbugs/Cyberbug";
+import {
   AutoComplete,
   Avatar,
   Button,
@@ -8,11 +15,6 @@ import {
   Table,
   Tag,
 } from "antd";
-import {
-  DELETE_PROJECT_SAGA,
-  EDIT_PROJECT,
-  GET_LIST_PROJECT_SAGA,
-} from "../../../redux/constants/Cyberbugs/Cyberbug";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,6 +30,10 @@ export default function ProjectManagement(props) {
   );
   // Sử dụng useDispatch để gọi action
   const dispatch = useDispatch();
+  const { userSearch } = useSelector(
+    (state) => state.UserLoginCyberBugsReducer
+  );
+  const [value, setValue] = useState("");
   const [state, setState] = useState({
     filteredInfo: null,
     sortedInfo: null,
@@ -116,7 +122,6 @@ export default function ProjectManagement(props) {
       title: "Members",
       key: "members",
       render: (text, record, index) => {
-        console.log(record);
         return (
           <div>
             {record.members?.slice(0, 3).map((member, index) => {
@@ -132,7 +137,36 @@ export default function ProjectManagement(props) {
               placement="bottom"
               title={"Add member"}
               content={() => {
-                return <AutoComplete style={{ width: "100%" }} />;
+                return (
+                  <AutoComplete
+                    options={userSearch?.map((user, index) => {
+                      return {
+                        label: user.name,
+                        value: user.userId.toString(),
+                      };
+                    })}
+                    value={value}
+                    onChange={(text) => {
+                      setValue(text);
+                    }}
+                    onSelect={(valueSelect, option) => {
+                      // set giá trị hộp thoại => option.label
+                      setValue(option.label);
+                      // Gọi API ADD_USER gửi về backend
+                      dispatch({
+                        type: ADD_USER_PROJECT_API,
+                        userProject: {
+                          projectId: record.id,
+                          userId: valueSelect,
+                        },
+                      });
+                    }}
+                    style={{ width: "100%" }}
+                    onSearch={(value) => {
+                      dispatch({ type: GET_USER_API, keyWord: value });
+                    }}
+                  />
+                );
               }}
               trigger="click"
             >

@@ -57,4 +57,5 @@ export const cyberbugsService = {
       headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
     });
   },
+  
 };
