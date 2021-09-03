@@ -3,6 +3,7 @@ import {
   GET_LIST_PROJECT_SAGA,
   GET_USER_API,
   GET_USER_SEARCH,
+  REMOVE_USER_PROJECT_API,
   USER_SIGNIN_API,
   USLOGIN,
 } from "../../constants/Cyberbugs/Cyberbug";
@@ -97,4 +98,25 @@ function* addUserProject(action) {
 
 export function* theoDoiAddUserProject() {
   yield takeLatest(ADD_USER_PROJECT_API, addUserProject);
+}
+
+// Quản lý REMOVE USER
+function* removeUserProject(action) {
+  console.log(action);
+  // Gọi api
+  try {
+    const { data, status } = yield call(() =>
+      userService.removeUserProject(action.userProject)
+    );
+    // GỌi API LOAD TRANG
+    yield put({
+      type: GET_LIST_PROJECT_SAGA,
+    });
+  } catch (err) {
+    console.log(err.response.data);
+  }
+}
+
+export function* theoDoiRemoveUserProject() {
+  yield takeLatest(REMOVE_USER_PROJECT_API, removeUserProject);
 }

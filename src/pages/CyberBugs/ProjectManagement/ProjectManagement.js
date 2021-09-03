@@ -4,6 +4,7 @@ import {
   EDIT_PROJECT,
   GET_LIST_PROJECT_SAGA,
   GET_USER_API,
+  REMOVE_USER_PROJECT_API,
 } from "../../../redux/constants/Cyberbugs/Cyberbug";
 import {
   AutoComplete,
@@ -15,7 +16,7 @@ import {
   Table,
   Tag,
 } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { CloseOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -125,7 +126,67 @@ export default function ProjectManagement(props) {
         return (
           <div>
             {record.members?.slice(0, 3).map((member, index) => {
-              return <Avatar key={index} src={member.avatar} />;
+              return (
+                <Popover
+                  key={index}
+                  placement="bottom"
+                  title={"Member"}
+                  content={() => {
+                    return (
+                      <table className="table">
+                        <thead>
+                          <tr>
+                            <td>Id</td>
+                            <td>Avatar</td>
+                            <td>Name</td>
+                            <td></td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {record.members?.map((member, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{member.userId}</td>
+                                <td>
+                                  <img
+                                    src={member.avatar}
+                                    alt={member.name}
+                                    style={{
+                                      borderRadius: "50%",
+                                      width: "32px",
+                                      height: "32px",
+                                    }}
+                                  />
+                                </td>
+                                <td>{member.name}</td>
+                                <td>
+                                  <Button
+                                    onClick={() => {
+                                      dispatch({
+                                        type: REMOVE_USER_PROJECT_API,
+                                        userProject: {
+                                          projectId: record.id,
+                                          userId: member.userId,
+                                        },
+                                      });
+                                    }}
+                                    type="danger"
+                                    shape="circle"
+                                  >
+                                    X
+                                  </Button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    );
+                  }}
+                >
+                  <Avatar key={index} src={member.avatar} />
+                </Popover>
+              );
             })}
             {record.members?.length > 3 ? (
               <Avatar style={{ backgroundColor: "#DDDDDD" }}>...</Avatar>

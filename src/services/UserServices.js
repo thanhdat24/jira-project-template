@@ -12,13 +12,22 @@ export const userService = {
       headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
     });
   },
-  assignUserProject  : (userProject)=>{
-       return Axios({
-         url: `${DOMAIN_CYBERBUG}/Project/assignUserProject`,
-         method: "POST",
-         data: userProject,
-         // token yếu cầu từ back-end chứng minh user đã login
-         headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
-       });
-  }
+  assignUserProject: (userProject) => {
+    return Axios({
+      url: `${DOMAIN_CYBERBUG}/Project/assignUserProject`,
+      method: "POST",
+      data: userProject,
+      // token yếu cầu từ back-end chứng minh user đã login
+      headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
+    });
+  },
+  removeUserProject: (userProject) => {
+    return Axios({
+      url: `${DOMAIN_CYBERBUG}/Project/removeUserFromProject `,
+      method: "POST",
+      data: userProject,
+      // token yếu cầu từ back-end chứng minh user đã login
+      headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
+    });
+  },
 };
