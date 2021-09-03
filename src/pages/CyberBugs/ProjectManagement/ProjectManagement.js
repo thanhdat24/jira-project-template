@@ -17,12 +17,11 @@ import {
   Tag,
 } from "antd";
 import { CloseOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import FormEditProject from "../../../components/Forms/FormEditProject/FormEditProject";
 import { OPEN_FORM_EDIT_PROJECT } from "../../../redux/constants/Cyberbugs/Cyberbug";
-import ReactHtmlParser from "react-html-parser";
 
 export default function ProjectManagement(props) {
   // Lấy dữ liệu từ reducer về component
@@ -31,6 +30,8 @@ export default function ProjectManagement(props) {
   );
   // Sử dụng useDispatch để gọi action
   const dispatch = useDispatch();
+  // Sử dụng searchRef để search trách api load lại ,search xong mới load
+  const searchRef = useRef(null);
   const { userSearch } = useSelector(
     (state) => state.UserLoginCyberBugsReducer
   );
@@ -224,7 +225,12 @@ export default function ProjectManagement(props) {
                     }}
                     style={{ width: "100%" }}
                     onSearch={(value) => {
-                      dispatch({ type: GET_USER_API, keyWord: value });
+                      if (searchRef.current) {
+                        clearTimeout(searchRef.current);
+                      }
+                      searchRef.current = setTimeout(() => {
+                        dispatch({ type: GET_USER_API, keyWord: value });
+                      }, 300);
                     }}
                   />
                 );
