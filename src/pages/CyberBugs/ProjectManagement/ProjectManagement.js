@@ -260,6 +260,7 @@ export default function ProjectManagement(props) {
             onClick={() => {
               const action = {
                 type: OPEN_FORM_EDIT_PROJECT,
+                title: "Edit Project",
                 Component: <FormEditProject />,
               };
               dispatch(action);

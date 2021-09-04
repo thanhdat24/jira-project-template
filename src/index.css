@@ -530,7 +530,12 @@ li {
 .project-settings {
   margin-left: 22%;
 }
-/* ----------- FormEditProject ------------ */
+/* ----------- Form Edit Project ------------ */
 .FormEdit-Project label {
+  font-weight: bold;
+}
+
+/* ----------- Form Create Task ------------ */
+.FormCreateTask-Project label {
   font-weight: bold;
 }

@@ -22,7 +22,7 @@ const { Option } = Select;
 
 export default function DrawerCyberBugs(props) {
   const dispatch = useDispatch();
-  const { visible, componentContent, callBackSubmit } = useSelector(
+  const { visible, componentContent, callBackSubmit, title } = useSelector(
     (state) => state.DrawerReducer
   );
 
@@ -35,7 +35,7 @@ export default function DrawerCyberBugs(props) {
   return (
     <Fragment>
       <Drawer
-        title="Create a new account"
+        title={title}
         width={720}
         onClose={onClose}
         visible={visible}

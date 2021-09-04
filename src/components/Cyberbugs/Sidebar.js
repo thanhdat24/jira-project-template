@@ -11,11 +11,15 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 
+import FormCreateTask from "../Forms/FormCreateTask/FormCreateTask";
+import { OPEN_FORM_CREATE_TASK } from "../../redux/constants/Cyberbugs/Cyberbug";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 const { Header, Sider, Content } = Layout;
 export default function Sidebar() {
+  const dispatch = useDispatch();
   const [state, setState] = useState({
     collapsed: false,
   });
@@ -47,8 +51,19 @@ export default function Sidebar() {
           <Menu.Item key="1" icon={<SearchOutlined style={{ fontSize: 20 }} />}>
             Search issues
           </Menu.Item>
-          <Menu.Item key="2" icon={<PlusOutlined style={{ fontSize: 20 }} />}>
-            Create Issue
+          <Menu.Item
+            key="2"
+            icon={<PlusOutlined style={{ fontSize: 20 }} />}
+            onClick={() => {
+              dispatch({
+                type: OPEN_FORM_CREATE_TASK,
+                visible: false,
+                Component: <FormCreateTask />,
+                title:"Create task"
+              });
+            }}
+          >
+            Create Task
           </Menu.Item>
           <Menu.Item key="3" icon={<QuestionCircleOutlined />}>
             About
