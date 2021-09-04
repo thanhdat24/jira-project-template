@@ -57,5 +57,12 @@ export const cyberbugsService = {
       headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
     });
   },
-  
+  getProjectDetail: (id) => {
+    return Axios({
+      url: `${DOMAIN_CYBERBUG}/Project/getProjectDetail?id=${id}`,
+      method: "GET",
+      // token yếu cầu từ back-end chứng minh user đã login
+      headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
+    });
+  },
 };

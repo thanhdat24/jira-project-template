@@ -81,7 +81,7 @@ export function* theoDoiGetUser() {
 
 // Quản lý ADD_USER
 function* addUserProject(action) {
-  console.log(action);
+  // console.log(action);
   // Gọi api
   try {
     const { data, status } = yield call(() =>
@@ -102,7 +102,7 @@ export function* theoDoiAddUserProject() {
 
 // Quản lý REMOVE USER
 function* removeUserProject(action) {
-  console.log(action);
+  // console.log(action);
   // Gọi api
   try {
     const { data, status } = yield call(() =>

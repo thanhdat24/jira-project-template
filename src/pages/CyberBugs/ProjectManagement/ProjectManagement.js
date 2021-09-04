@@ -21,6 +21,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import FormEditProject from "../../../components/Forms/FormEditProject/FormEditProject";
+import { NavLink } from "react-router-dom";
 import { OPEN_FORM_EDIT_PROJECT } from "../../../redux/constants/Cyberbugs/Cyberbug";
 
 export default function ProjectManagement(props) {
@@ -44,7 +45,7 @@ export default function ProjectManagement(props) {
     dispatch({ type: GET_LIST_PROJECT_SAGA });
   }, []);
   const handleChange = (pagination, filters, sorter) => {
-    console.log("Various parameters", pagination, filters, sorter);
+    // console.log("Various parameters", pagination, filters, sorter);
     setState({
       filteredInfo: filters,
       sortedInfo: sorter,
@@ -83,21 +84,15 @@ export default function ProjectManagement(props) {
       title: "Project Name",
       dataIndex: "projectName",
       key: "projectName",
+      render: (text, record, index) => {
+        return <NavLink to={`/projectdetail/${record.id}`}>{text}</NavLink>;
+      },
       sorter: (a, b) => {
         let projectName1 = a.projectName?.trim().toLowerCase();
         let projectName2 = b.projectName?.trim().toLowerCase();
         return projectName2 < projectName1 ? -1 : 1;
       },
     },
-    // {
-    //   title: "description",
-    //   dataIndex: "description",
-    //   key: "description",
-    //   render: (text, record, index) => {
-    //     let jsxContent = ReactHtmlParser(text);
-    //     return <div>{jsxContent}</div>;
-    //   },
-    // },
     {
       title: "Category",
       dataIndex: "categoryName",

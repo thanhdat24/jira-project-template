@@ -4,6 +4,7 @@ import { DrawerReducer } from "./DrawerReducer";
 import { HistoryReducer } from "./HistoryReducer";
 import LoadingReducer from "./LoadingReducer";
 import { ProjectCategoryReducer } from "./ProjectCategoryReducer";
+import { ProjectDetailReducer } from "./ProjectDetailReducer";
 import { ProjectEditReducer } from "./ProjectEditReducer";
 import { ProjectManagementReducer } from "./ProjectManagementReducer";
 import { UserLoginCyberBugsReducer } from "./UserCyberBugsReducer";
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   ProjectManagementReducer,
   DrawerReducer,
   ProjectEditReducer,
+  ProjectDetailReducer,
 });
 
 const store = createStore(

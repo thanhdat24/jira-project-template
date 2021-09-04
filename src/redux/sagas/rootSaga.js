@@ -18,6 +18,7 @@ export function* rootSaga() {
     ProjectSaga.theoDoiGetListProjectSaga(),
     ProjectSaga.theoDoiUpdateProjectSaga(),
     ProjectSaga.theoDoiDeleteProjectSaga(),
+    ProjectSaga.theoDoiGetProjectDetailSaga(),
 
     // Nghiệp vụ ...
   ]);

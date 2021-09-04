@@ -1,38 +1,36 @@
-import React from "react";
+import React, { Fragment } from "react";
 
-export default function InfoMain() {
+import ReactHtmlParser from "react-html-parser";
+
+export default function InfoMain(props) {
+  const { projectDetail } = props;
+  const renderAvatar = () => {
+    return projectDetail.members?.map((member, index) => {
+      return (
+        <div key={index} className="avatar">
+          <img src={member.avatar} alt={member.userId} />
+        </div>
+      );
+    });
+  };
   return (
-    <div className="info" style={{ display: "flex" }}>
-      <div className="search-block">
-        <input className="search" />
-        <i className="fa fa-search" />
-      </div>
-      <div className="avatar-group" style={{ display: "flex" }}>
-        <div className="avatar">
-          <img
-            src={require("../../../assets/img/download (1).jfif").default}
-            alt="avatar"
-          />
+    <Fragment>
+      <section>{ReactHtmlParser(projectDetail.description)}</section>
+      <div className="info" style={{ display: "flex" }}>
+        <div className="search-block">
+          <input className="search" />
+          <i className="fa fa-search" />
         </div>
-        <div className="avatar">
-          <img
-            src={require("../../../assets/img/download (2).jfif").default}
-            alt="avatar"
-          />
+        <div className="avatar-group" style={{ display: "flex" }}>
+          {renderAvatar()}
         </div>
-        <div className="avatar">
-          <img
-            src={require("../../../assets/img/download (3).jfif").default}
-            alt="avatar"
-          />
+        <div style={{ marginLeft: 20 }} className="text">
+          Only My Issues
+        </div>
+        <div style={{ marginLeft: 20 }} className="text">
+          Recently Updated
         </div>
       </div>
-      <div style={{ marginLeft: 20 }} className="text">
-        Only My Issues
-      </div>
-      <div style={{ marginLeft: 20 }} className="text">
-        Recently Updated
-      </div>
-    </div>
+    </Fragment>
   );
 }

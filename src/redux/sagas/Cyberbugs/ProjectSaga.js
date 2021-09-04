@@ -3,6 +3,8 @@ import {
   DELETE_PROJECT_SAGA,
   GET_LIST_PROJECT,
   GET_LIST_PROJECT_SAGA,
+  GET_PROJECT_DETAIL_SAGA,
+  PUT_PROJECT_DETAIL,
   UPDATE_PROJECT_SAGA,
 } from "../../constants/Cyberbugs/Cyberbug";
 import {
@@ -18,7 +20,7 @@ import { notifiFunction } from "../../../util/Notification/Notification";
 
 // ---- Create Project Saga ----
 function* createProjectSaga(action) {
-  console.log(action);
+  // console.log(action);
   // HIỆN THỊ LOADING
   yield put({
     type: DiSPLAY_LOADING,
@@ -70,7 +72,7 @@ export function* theoDoiGetListProjectSaga() {
 
 // ----Update Project ----
 function* updateProjectSaga(action) {
-  console.log("update", action);
+  // console.log("update", action);
   yield put({
     type: DiSPLAY_LOADING,
   });
@@ -82,7 +84,7 @@ function* updateProjectSaga(action) {
     // Gọi api thành công thì dispatch lên reducer thông qua put
 
     if (status === STATUS_CODE.SUCCESS) {
-      console.log(data);
+      // console.log(data);
     }
     // yield put({
     //   type: "GET_LIST_PROJECT_SAGA",
@@ -106,7 +108,7 @@ export function* theoDoiUpdateProjectSaga() {
 
 // ----Delete Project ----
 function* deleteProjectSaga(action) {
-  console.log("delete", action);
+  // console.log("delete", action);
   yield put({
     type: DiSPLAY_LOADING,
   });
@@ -118,7 +120,7 @@ function* deleteProjectSaga(action) {
     // Gọi api thành công thì dispatch lên reducer thông qua put
 
     if (status === STATUS_CODE.SUCCESS) {
-      console.log(data);
+      // console.log(data);
       notifiFunction("success", "Successfully!");
     }
     yield put({
@@ -134,4 +136,31 @@ function* deleteProjectSaga(action) {
 }
 export function* theoDoiDeleteProjectSaga() {
   yield takeLatest(DELETE_PROJECT_SAGA, deleteProjectSaga);
+}
+
+// ----Get Project Detail----
+function* getProjectDetailSaga(action) {
+  yield put({
+    type: DiSPLAY_LOADING,
+  });
+  yield delay(500);
+  try {
+    const { data, status } = yield call(() =>
+      cyberbugsService.getProjectDetail(action.projectId)
+    );
+    // Lấy api thành công thì đưa dữ liệu lên redux
+    yield put({
+      type: PUT_PROJECT_DETAIL,
+      projectDetail: data.content,
+    });
+  } catch (err) {
+    console.log(err.response.data);
+    history.push("/projectmanagement");
+  }
+  yield put({
+    type: HIDE_LOADING,
+  });
+}
+export function* theoDoiGetProjectDetailSaga() {
+  yield takeLatest(GET_PROJECT_DETAIL_SAGA, getProjectDetailSaga);
 }
