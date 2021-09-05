@@ -3,10 +3,12 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import { DrawerReducer } from "./DrawerReducer";
 import { HistoryReducer } from "./HistoryReducer";
 import LoadingReducer from "./LoadingReducer";
+import { PriorityReducer } from "./PriorityReducer";
 import { ProjectCategoryReducer } from "./ProjectCategoryReducer";
 import { ProjectDetailReducer } from "./ProjectDetailReducer";
 import { ProjectEditReducer } from "./ProjectEditReducer";
 import { ProjectManagementReducer } from "./ProjectManagementReducer";
+import { TaskTypeReducer } from "./TaskTypeReducer";
 import { UserLoginCyberBugsReducer } from "./UserCyberBugsReducer";
 import createMiddlewareSaga from "redux-saga";
 import reduxThunk from "redux-thunk";
@@ -25,6 +27,8 @@ const rootReducer = combineReducers({
   DrawerReducer,
   ProjectEditReducer,
   ProjectDetailReducer,
+  TaskTypeReducer,
+  PriorityReducer,
 });
 
 const store = createStore(

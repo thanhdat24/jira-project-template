@@ -59,7 +59,7 @@ export default function Sidebar() {
                 type: OPEN_FORM_CREATE_TASK,
                 visible: false,
                 Component: <FormCreateTask />,
-                title:"Create task"
+                title: "Create Task",
               });
             }}
           >

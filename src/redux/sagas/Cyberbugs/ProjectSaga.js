@@ -1,6 +1,8 @@
 import {
   CREATE_PROJECT_SAGA,
   DELETE_PROJECT_SAGA,
+  GET_ALL_PROJECT,
+  GET_ALL_PROJECT_SAGA,
   GET_LIST_PROJECT,
   GET_LIST_PROJECT_SAGA,
   GET_PROJECT_DETAIL_SAGA,
@@ -163,4 +165,32 @@ function* getProjectDetailSaga(action) {
 }
 export function* theoDoiGetProjectDetailSaga() {
   yield takeLatest(GET_PROJECT_DETAIL_SAGA, getProjectDetailSaga);
+}
+
+// ---- Get All Project ----
+function* getAllProjectSaga(action) {
+  console.log(action);
+  yield put({
+    type: DiSPLAY_LOADING,
+  });
+  yield delay(500);
+  try {
+    const { data, status } = yield call(() => cyberbugsService.getAllProject());
+    // Gọi api thành công thì dispatch lên reducer thông qua put
+
+    if (status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: GET_ALL_PROJECT,
+        arrProject: data.content,
+      });
+    }
+  } catch (err) {
+    console.log(err.response.data);
+  }
+  yield put({
+    type: HIDE_LOADING,
+  });
+}
+export function* theoDoiGetAllProjectSaga() {
+  yield takeLatest(GET_ALL_PROJECT_SAGA, getAllProjectSaga);
 }

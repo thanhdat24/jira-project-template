@@ -1,13 +1,11 @@
-import { GET_LIST_PROJECT } from "../constants/Cyberbugs/Cyberbug";
+import {
+  GET_ALL_PROJECT,
+  GET_LIST_PROJECT,
+} from "../constants/Cyberbugs/Cyberbug";
 
 const stateDefault = {
-  projectList: [
-    // {
-    //   id: "1",
-    //   projectName: "abc",
-    //   description: `<p style="color:red">123</p>`,
-    // },
-  ],
+  projectList: [],
+  arrProject: [], // Get all project to dropdown
 };
 
 export const ProjectManagementReducer = (state = stateDefault, action) => {
@@ -15,6 +13,9 @@ export const ProjectManagementReducer = (state = stateDefault, action) => {
     case GET_LIST_PROJECT: {
       state.projectList = action.projectList;
       return { ...state };
+    }
+    case GET_ALL_PROJECT: {
+      return { ...state, arrProject: action.arrProject };
     }
     default:
       return { ...state };

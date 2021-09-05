@@ -46,12 +46,14 @@ export default function DrawerCyberBugs(props) {
               textAlign: "right",
             }}
           >
-            <Button onClick={onClose} style={{ marginRight: 8 }}>
-              Cancel
-            </Button>
-            <Button onClick={callBackSubmit} type="primary">
+            <Button
+              onClick={callBackSubmit}
+              type="primary"
+              style={{ marginRight: 8 }}
+            >
               Submit
             </Button>
+            <Button onClick={onClose}>Cancel</Button>
           </div>
         }
       >
