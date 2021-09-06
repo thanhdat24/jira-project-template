@@ -2,6 +2,7 @@ import {
   GET_ALL_PRIORITY_SAGA,
   GET_ALL_PROJECT_SAGA,
   GET_ALL_TASK_TYPE_SAGA,
+  GET_USER_API,
 } from "../../../redux/constants/Cyberbugs/Cyberbug";
 import React, { useEffect, useState } from "react";
 import { Select, Slider } from "antd";
@@ -10,16 +11,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { CheckSquareOutlined } from "@ant-design/icons";
 import { Editor } from "@tinymce/tinymce-react";
 
-const { Option } = Select;
-const children = [];
-for (let i = 10; i < 36; i++) {
-  children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-}
 export default function FormCreateTask(props) {
   const dispatch = useDispatch();
   const { arrProject } = useSelector((state) => state.ProjectManagementReducer);
   const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
+  const { userSearch } = useSelector(
+    (state) => state.UserLoginCyberBugsReducer
+  );
+
+  const useOptions = userSearch.map((item, index) => {
+    return { value: item.userId, label: item.name };
+  });
   console.log("arrProject", arrProject);
   const [size, setSize] = React.useState("default");
   const [timeTracking, setTimeTracking] = useState({
@@ -32,7 +35,9 @@ export default function FormCreateTask(props) {
     dispatch({ type: GET_ALL_PROJECT_SAGA });
     dispatch({ type: GET_ALL_TASK_TYPE_SAGA });
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
+    dispatch({ type: GET_USER_API, keyWord: "" });
   }, []);
+
   function handleChange(value) {
     console.log(`Selected: ${value}`);
   }
@@ -96,15 +101,18 @@ export default function FormCreateTask(props) {
           <div className="col-6">
             <label>Assignees</label>
             <Select
-              mode="tags"
+              mode="multiple"
               size={size}
+              options={useOptions}
               placeholder="Please select"
-              defaultValue={["a10", "c12"]}
+              defaultValue={["admin", "Tester"]}
+              optionFilterProp="label"
               onChange={handleChange}
               style={{ width: "100%" }}
-            >
-              {children}
-            </Select>
+              onSearch={(value) => {
+                // console.log("value", value);
+              }}
+            ></Select>
           </div>
           <div className="col-6">
             <label>Original Estimate (h)</label>

@@ -6,7 +6,11 @@ let usLogin = {};
 if (localStorage.getItem(USER_LOGIN)) {
   usLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
 }
-const stateDefault = { userLogin: usLogin, userSearch: [] };
+const stateDefault = {
+  userLogin: usLogin,
+  userSearch: [],
+  // arrUser: [], //Array user chp thẻ se;ect create task
+};
 
 export const UserLoginCyberBugsReducer = (state = stateDefault, action) => {
   switch (action.type) {
