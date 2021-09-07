@@ -14,6 +14,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 
 import { CheckSquareOutlined } from "@ant-design/icons";
 import { Editor } from "@tinymce/tinymce-react";
+import { GET_ALL_STATUS_SAGA } from "../../../redux/constants/Cyberbugs/StatusConstants";
 import { withFormik } from "formik";
 
 function FormCreateTask(props) {
@@ -24,7 +25,7 @@ function FormCreateTask(props) {
   const { userSearch } = useSelector(
     (state) => state.UserLoginCyberBugsReducer
   );
-
+  const { arrStatus } = useSelector((state) => state.StatusReducer);
   const useOptions = userSearch.map((item, index) => {
     return { value: item.userId, label: item.name };
   });
@@ -41,6 +42,7 @@ function FormCreateTask(props) {
     dispatch({ type: GET_ALL_TASK_TYPE_SAGA });
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
     dispatch({ type: GET_USER_API, keyWord: "" });
+    dispatch({ type: GET_ALL_STATUS_SAGA });
   }, []);
 
   // Do connect với withformik => component có các props
@@ -72,13 +74,35 @@ function FormCreateTask(props) {
           })}
         </select>
       </div>
-      <div className="form-group">
-        <label>Task Name</label>
-        <input
-          name="taskName"
-          className="form-control"
-          onChange={handleChange}
-        />
+      <div class="row">
+        <div class="col-6">
+          <div className="form-group">
+            <label>Task Name</label>
+            <input
+              name="taskName"
+              className="form-control"
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div class="col-6">
+          <div className="form-group">
+            <label>Status</label>
+            <select
+              name="statusId"
+              className="form-control"
+              onChange={handleChange}
+            >
+              {arrStatus.map((status, index) => {
+                return (
+                  <option key={index} value={status.statusId}>
+                    {status.statusName}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
       </div>
       <div className="form-group">
         <div className="row">

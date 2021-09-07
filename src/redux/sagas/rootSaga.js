@@ -2,6 +2,7 @@ import * as Cyberbugs from "./Cyberbugs/UserCyberbugsSaga";
 import * as PrioritySaga from "./Cyberbugs/PrioritySaga";
 import * as ProjectCategory from "./Cyberbugs/ProjectCategorySaga";
 import * as ProjectSaga from "./Cyberbugs/ProjectSaga";
+import * as StatusSaga from "./Cyberbugs/StatusSaga";
 import * as TaskSaga from "./Cyberbugs/TaskSaga";
 import * as TaskTypeSaga from "./Cyberbugs/TaskTypeSaga";
 
@@ -26,6 +27,7 @@ export function* rootSaga() {
     TaskTypeSaga.theoDoiGetAllTaskTypeSaga(),
     PrioritySaga.theoDoiGetPrioritySaga(),
     TaskSaga.theoDoiCreateTaskSagaSaga(),
+    StatusSaga.theoDoiGetAllStatusSaga(),
     // Nghiệp vụ ...
   ]);
 }

@@ -169,7 +169,7 @@ export function* theoDoiGetProjectDetailSaga() {
 
 // ---- Get All Project ----
 function* getAllProjectSaga(action) {
-  console.log(action);
+  // console.log(action);
   yield put({
     type: DiSPLAY_LOADING,
   });
