@@ -6,6 +6,7 @@ import {
   GET_ALL_PROJECT_SAGA,
   GET_ALL_TASK_TYPE_SAGA,
   GET_USER_API,
+  SET_SUBMIT_CREATE_TASK,
 } from "../../../redux/constants/Cyberbugs/Cyberbug";
 import React, { useEffect, useState } from "react";
 import { Select, Slider } from "antd";
@@ -40,6 +41,8 @@ function FormCreateTask(props) {
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
     dispatch({ type: GET_USER_API, keyWord: "" });
     dispatch({ type: GET_ALL_STATUS_SAGA });
+    // Đưa hàm handle submit lên drawer reducer để cập nhật lại sự kiện cho nút submit
+    dispatch({ type: SET_SUBMIT_CREATE_TASK, submitFunction: handleSubmit });
   }, []);
 
   // Do connect với withformik => component có các props
@@ -259,7 +262,7 @@ function FormCreateTask(props) {
           />
         </div>
       </div>
-      <button className="btn btn-success">Submit</button>
+      {/* <button className="btn btn-success">Submit</button> */}
     </form>
   );
 }
