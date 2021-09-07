@@ -30,4 +30,13 @@ export const userService = {
       headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
     });
   },
+  getUserByProjectId: (idProject) => {
+    return Axios({
+      url: `${DOMAIN_CYBERBUG}/Users/getUserByProjectId?idProject=${idProject}`,
+      method: "GET",
+      data: idProject,
+      // token yếu cầu từ back-end chứng minh user đã login
+      headers: { Authorization: "Bearer " + localStorage.getItem(TOKEN) },
+    });
+  },
 };

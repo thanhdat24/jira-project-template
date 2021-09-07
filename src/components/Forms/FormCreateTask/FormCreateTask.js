@@ -6,7 +6,6 @@ import {
   GET_ALL_PROJECT_SAGA,
   GET_ALL_TASK_TYPE_SAGA,
   GET_USER_API,
-  UPDATE_PROJECT_SAGA,
 } from "../../../redux/constants/Cyberbugs/Cyberbug";
 import React, { useEffect, useState } from "react";
 import { Select, Slider } from "antd";
@@ -15,6 +14,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { CheckSquareOutlined } from "@ant-design/icons";
 import { Editor } from "@tinymce/tinymce-react";
 import { GET_ALL_STATUS_SAGA } from "../../../redux/constants/Cyberbugs/StatusConstants";
+import { GET_USER_BY_PROJECT_ID_SAGA } from "../../../redux/constants/Cyberbugs/UserConstants";
 import { withFormik } from "formik";
 
 function FormCreateTask(props) {
@@ -22,11 +22,9 @@ function FormCreateTask(props) {
   const { arrProject } = useSelector((state) => state.ProjectManagementReducer);
   const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
-  const { userSearch } = useSelector(
-    (state) => state.UserLoginCyberBugsReducer
-  );
+  const { arrUser } = useSelector((state) => state.UserLoginCyberBugsReducer);
   const { arrStatus } = useSelector((state) => state.StatusReducer);
-  const useOptions = userSearch.map((item, index) => {
+  const useOptions = arrUser.map((item, index) => {
     return { value: item.userId, label: item.name };
   });
   const [size, setSize] = React.useState("default");
@@ -62,7 +60,13 @@ function FormCreateTask(props) {
         <select
           name="projectId"
           className="form-control"
-          onChange={handleChange}
+          onChange={(e) => {
+            // dispatch giá trị cho projectId
+            let { value } = e.target;
+            dispatch({ type: GET_USER_BY_PROJECT_ID_SAGA, idProject: value });
+            // Cập nhật giá trị cho projectId
+            setFieldValue("projectId", e.target.value);
+          }}
         >
           {arrProject.map((project, index) => {
             return (
@@ -151,6 +155,7 @@ function FormCreateTask(props) {
               // defaultValue={["admin", "Tester"]}
               optionFilterProp="label"
               onChange={(values) => {
+                // set lại giá trị cho listUserAsign
                 setFieldValue("listUserAsign", values);
               }}
               style={{ width: "100%" }}
@@ -264,6 +269,13 @@ const CreateTaskForm = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
     const { arrProject, arrTaskType, arrPriority, arrStatus } = props;
+    // if (arrProject.length > 0) {
+    //   props.dispatch({
+    //     type: GET_USER_BY_PROJECT_ID_SAGA,
+    //     idProject: arrProject[0]?.id,
+    //   });
+    // }
+
     return {
       listUserAsign: [],
       taskName: "",

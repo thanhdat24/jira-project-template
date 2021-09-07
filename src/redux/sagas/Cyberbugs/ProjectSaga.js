@@ -15,6 +15,7 @@ import {
 } from "../../constants/Loading/LoadingConst";
 import { call, delay, put, takeLatest } from "redux-saga/effects";
 
+import { GET_USER_BY_PROJECT_ID_SAGA } from "../../constants/Cyberbugs/UserConstants";
 import { STATUS_CODE } from "../../../util/constants/settingSystem";
 import { cyberbugsService } from "../../../services/CyberbugsService";
 import { history } from "../../../util/history/history";
@@ -182,6 +183,12 @@ function* getAllProjectSaga(action) {
       yield put({
         type: GET_ALL_PROJECT,
         arrProject: data.content,
+      });
+
+      // dispatch dữ liệu ban đầu cho prjectId và tránh cảnh báo
+      yield put({
+        type: GET_USER_BY_PROJECT_ID_SAGA,
+        idProject: data.content?.[0].id,
       });
     }
   } catch (err) {
