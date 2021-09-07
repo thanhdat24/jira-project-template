@@ -29,7 +29,6 @@ function FormCreateTask(props) {
   const useOptions = userSearch.map((item, index) => {
     return { value: item.userId, label: item.name };
   });
-  // console.log("arrProject", arrProject);
   const [size, setSize] = React.useState("default");
   const [timeTracking, setTimeTracking] = useState({
     timeTrackingSpent: 0,
@@ -74,8 +73,8 @@ function FormCreateTask(props) {
           })}
         </select>
       </div>
-      <div class="row">
-        <div class="col-6">
+      <div className="row">
+        <div className="col-6">
           <div className="form-group">
             <label>Task Name</label>
             <input
@@ -85,7 +84,7 @@ function FormCreateTask(props) {
             />
           </div>
         </div>
-        <div class="col-6">
+        <div className="col-6">
           <div className="form-group">
             <label>Status</label>
             <select
@@ -229,7 +228,7 @@ function FormCreateTask(props) {
           </div>
         </div>
       </div>
-      <div class="form-group">
+      <div className="form-group">
         <label>Description</label>
         <div>
           <Editor
@@ -264,27 +263,37 @@ const CreateTaskForm = withFormik({
   // thuộc tính enableReinitialize: khi mỗi lần props của redux thay đổi thì nó lặp tức bidding lại giá trị obj
   enableReinitialize: true,
   mapPropsToValues: (props) => {
+    const { arrProject, arrTaskType, arrPriority, arrStatus } = props;
     return {
       listUserAsign: [],
       taskName: "",
       description: "",
-      statusId: 1,
+      statusId: arrStatus[0]?.statusId,
       originalEstimate: 0,
       timeTrackingSpent: 0,
       timeTrackingRemaining: 0,
-      projectId: 0,
-      typeId: 0,
-      priorityId: 0,
+      projectId: arrProject[0]?.id,
+      typeId: arrTaskType[0]?.id,
+      priorityId: arrPriority[0]?.priorityId,
     };
   },
-  // validationSchema: Yup.object().shape({}),
+  validationSchema: Yup.object().shape({}),
   handleSubmit: (values, { props, setSubmitting }) => {
     // khi người dùng bấm submit => đưa dữ liệu về backend thông qua API
     props.dispatch({ type: CREATE_TASK_SAGA, taskObject: values });
+    console.log("taskobj", values);
     // Gọi saga
   },
 
   displayName: "createTaskForm",
 })(FormCreateTask);
 
-export default connect()(CreateTaskForm);
+const mapStateToProps = (state) => {
+  return {
+    arrProject: state.ProjectManagementReducer.arrProject,
+    arrTaskType: state.TaskTypeReducer.arrTaskType,
+    arrPriority: state.PriorityReducer.arrPriority,
+    arrStatus: state.StatusReducer.arrStatus,
+  };
+};
+export default connect(mapStateToProps)(CreateTaskForm);

@@ -10,6 +10,6 @@ export const StatusReducer = (state = initialState, action) => {
       return { ...state, arrStatus: action.arrStatus };
 
     default:
-      return state;
+      return { ...state };
   }
 };

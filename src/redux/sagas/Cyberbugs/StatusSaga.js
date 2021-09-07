@@ -15,6 +15,7 @@ function* getAllStatus(action) {
       arrStatus: data.content,
     });
   } catch (err) {
+    console.log(err);
     console.log(err.response?.data);
   }
 }
