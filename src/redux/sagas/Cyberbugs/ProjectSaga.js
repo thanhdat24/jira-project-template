@@ -38,9 +38,11 @@ function* createProjectSaga(action) {
     if (status === STATUS_CODE.SUCCESS) {
       // console.log(data);
       history.push("/projectmanagement");
+      notifiFunction("success", "Successfully!");
     }
   } catch (err) {
     console.log(err.response.data);
+    notifiFunction("error", "Failed!");
   }
   yield put({
     type: HIDE_LOADING,

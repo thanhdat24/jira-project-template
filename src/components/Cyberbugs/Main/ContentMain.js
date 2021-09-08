@@ -3,89 +3,52 @@ import React from "react";
 export default function ContentMain(props) {
   const { projectDetail } = props;
   const renderCardTaskList = () => {
-    return projectDetail.lstTask?.map((task, index) => {
+    return projectDetail.lstTask?.map((lstTask, index) => {
       return (
-        <div
+        <li
           key={index}
           className="card"
-          style={{ width: "17rem", height: "25rem" }}
+          style={{ width: "17rem", height: "auto" }}
         >
-          <div className="card-header">{task.statusName}</div>
+          <div className="card-header">{lstTask.statusName}</div>
           <ul className="list-group list-group-flush">
-            <li
-              className="list-group-item"
-              data-toggle="modal"
-              data-target="#infoModal"
-              style={{ cursor: "pointer" }}
-            >
-              <p>
-                Each issue has a single reporter but can have multiple assignees
-              </p>
-              <div className="block" style={{ display: "flex" }}>
-                <div className="block-left">
-                  <i className="fa fa-bookmark" />
-                  <i className="fa fa-arrow-up" />
-                </div>
-                <div className="block-right">
-                  <div className="avatar-group" style={{ display: "flex" }}>
-                    <div className="avatar">
-                      <img
-                        src={
-                          require("../../../assets/img/download (1).jfif")
-                            .default
-                        }
-                        alt="avatar"
-                      />
+            {lstTask.lstTaskDeTail?.map((task, index) => {
+              return (
+                <li
+                  key={index}
+                  className="list-group-item"
+                  data-toggle="modal"
+                  data-target="#infoModal"
+                  style={{ cursor: "pointer" }}
+                >
+                  <p>{task.taskName}</p>
+                  <div className="block" style={{ display: "flex" }}>
+                    <div className="block-left">
+                      <p className="text-danger">
+                        {task.priorityTask.priority}
+                      </p>
                     </div>
-                    <div className="avatar">
-                      <img
-                        src={
-                          require("../../../assets/img/download (2).jfif")
-                            .default
-                        }
-                        alt="avatar"
-                      />
+                    <div className="block-right">
+                      <div className="avatar-group" style={{ display: "flex" }}>
+                        <div className="avatar">
+                          {task.assigness?.map((member, index) => {
+                            return (
+                              <img
+                                key={index}
+                                src={member.avatar}
+                                alt={member.avatar}
+                              />
+                            );
+                          })}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </li>
-            <li className="list-group-item">
-              <p>
-                Each issue has a single reporter but can have multiple assignees
-              </p>
-              <div className="block" style={{ display: "flex" }}>
-                <div className="block-left">
-                  <i className="fa fa-check-square" />
-                  <i className="fa fa-arrow-up" />
-                </div>
-                <div className="block-right">
-                  <div className="avatar-group" style={{ display: "flex" }}>
-                    <div className="avatar">
-                      <img
-                        src={
-                          require("../../../assets/img/download (1).jfif")
-                            .default
-                        }
-                        alt="avatar"
-                      />
-                    </div>
-                    <div className="avatar">
-                      <img
-                        src={
-                          require("../../../assets/img/download (2).jfif")
-                            .default
-                        }
-                        alt="avatar"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li className="list-group-item">Vestibulum at eros</li>
+                </li>
+              );
+            })}
           </ul>
-        </div>
+        </li>
       );
     });
   };

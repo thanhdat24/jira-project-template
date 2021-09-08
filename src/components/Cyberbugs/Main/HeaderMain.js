@@ -8,6 +8,7 @@ export default function HeaderMain(props) {
         <ol className="breadcrumb" style={{ backgroundColor: "white" }}>
           <li className="breadcrumb-item">Project</li>
           <li className="breadcrumb-item">CyberLearn</li>
+          <li className="breadcrumb-item">Project management</li>
           <li className="breadcrumb-item active" aria-current="page">
             {projectDetail.projectName}
           </li>

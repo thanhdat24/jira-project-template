@@ -7,10 +7,10 @@ import { CyberbugsTemplate } from "./templates/HomeTemplate/CyberbugsTemplate";
 import DrawerCyberBugs from "./HOC/Modal/DrawerCyberBugs";
 import Home from "./pages/CyberBugs/Home/Home";
 import { HomeTemplate } from "./templates/HomeTemplate/HomeTemplate";
-import IndexCyberBugs from "./redux/sagas/Cyberbugs/IndexCyberBugs";
 import LoadingComponent from "./components/GlobalSetting/LoadingComponent/LoadingComponent";
 import LoginCyberBugs from "./pages/CyberBugs/LoginCyberBugs/LoginCyberBugs";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
+import ProjectDetail from "./pages/CyberBugs/ProjectDetail/ProjectDetail";
 import ProjectManagement from "./pages/CyberBugs/ProjectManagement/ProjectManagement";
 import ProjectSettings from "./pages/CyberBugs/ProjectSettings/ProjectSettings";
 import { UserLoginTemplate } from "./templates/HomeTemplate/UserLoginTemplate";
@@ -29,7 +29,7 @@ function App() {
       <Switch>
         <HomeTemplate path="/home" exact Component={Home} />
         <UserLoginTemplate exact path="/login" Component={LoginCyberBugs} />
-        <CyberbugsTemplate path="/cyberbugs" Component={IndexCyberBugs} />
+        <CyberbugsTemplate path="/cyberbugs" Component={ProjectDetail} />
         <CyberbugsTemplate
           path="/projectmanagement"
           Component={ProjectManagement}
@@ -40,7 +40,7 @@ function App() {
         />
         <CyberbugsTemplate
           path="/projectdetail/:projectId"
-          Component={IndexCyberBugs}
+          Component={ProjectDetail}
         />
         <CyberbugsTemplate exact path="/" Component={ProjectManagement} />
         <HomeTemplate exact path="*" Component={PageNotFound} />

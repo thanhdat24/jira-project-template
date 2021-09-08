@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ContentMain from "../../../components/Cyberbugs/Main/ContentMain";
-import { GET_PROJECT_DETAIL_SAGA } from "../../constants/Cyberbugs/Cyberbug";
+import { GET_PROJECT_DETAIL_SAGA } from "../../../redux/constants/Cyberbugs/Cyberbug";
 import HeaderMain from "../../../components/Cyberbugs/Main/HeaderMain";
 import InfoMain from "../../../components/Cyberbugs/Main/InfoMain";
 
-export default function IndexCyberBugs(props) {
+export default function ProjectDetail(props) {
   let { projectDetail } = useSelector((state) => state.ProjectDetailReducer);
   const dispatch = useDispatch();
   console.log(projectDetail);
