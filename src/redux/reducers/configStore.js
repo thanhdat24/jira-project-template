@@ -9,6 +9,7 @@ import { ProjectDetailReducer } from "./ProjectDetailReducer";
 import { ProjectEditReducer } from "./ProjectEditReducer";
 import { ProjectManagementReducer } from "./ProjectManagementReducer";
 import { StatusReducer } from "./StatusReducer";
+import { TaskReducer } from "./TaskReducer";
 import { TaskTypeReducer } from "./TaskTypeReducer";
 import { UserLoginCyberBugsReducer } from "./UserCyberBugsReducer";
 import createMiddlewareSaga from "redux-saga";
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   TaskTypeReducer,
   PriorityReducer,
   StatusReducer,
+  TaskReducer,
 });
 
 const store = createStore(
