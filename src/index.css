@@ -434,7 +434,9 @@ li {
   margin-bottom: 20px;
 }
 
-.estimate-hours {
+.estimate-hours,
+.time-spent,
+.time-remaining {
   height: 35px;
   background: #f2f3f7;
   margin-bottom: 20px;
@@ -444,7 +446,9 @@ li {
   padding: 8px;
 }
 
-.estimate-hours:focus {
+.estimate-hours:focus,
+.time-spent:focus,
+.time-remaining:focus {
   background: white;
 }
 

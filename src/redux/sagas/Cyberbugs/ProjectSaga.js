@@ -8,7 +8,7 @@ import {
   GET_PROJECT_DETAIL,
   GET_PROJECT_DETAIL_SAGA,
   UPDATE_PROJECT_SAGA,
-} from "../../constants/Cyberbugs/Cyberbug";
+} from "../../constants/Cyberbugs/Cyberbug.js";
 import {
   DiSPLAY_LOADING,
   HIDE_LOADING,

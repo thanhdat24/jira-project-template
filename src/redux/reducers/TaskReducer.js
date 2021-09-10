@@ -1,4 +1,7 @@
-import { GET_TASK_DETAIL } from "../constants/Cyberbugs/Cyberbug";
+import {
+  CHANGE_TASK_MODAL,
+  GET_TASK_DETAIL,
+} from "../constants/Cyberbugs/Cyberbug.js";
 
 const initialState = {
   taskDetailModal: {
@@ -24,7 +27,7 @@ const initialState = {
     alias: "task3",
     description:
       '<p><span style="background-color: #2dc26b;">CYBERSOFT</span></p>',
-    statusId: "3",
+    statusId: "2",
     originalEstimate: 5,
     timeTrackingSpent: 3,
     timeTrackingRemaining: 0,
@@ -38,6 +41,13 @@ export const TaskReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_TASK_DETAIL: {
       return { ...state, taskDetailModal: action.taskDetailModal };
+    }
+    case CHANGE_TASK_MODAL: {
+      const { name, value } = action;
+      return {
+        ...state,
+        taskDetailModal: { ...state.taskDetailModal, [name]: value },
+      };
     }
     default:
       return { ...state };

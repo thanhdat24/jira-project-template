@@ -5,7 +5,7 @@ import {
   GET_TASK_DETAIL,
   GET_TASK_DETAIL_SAGA,
   UPDATE_STATUS_TASK_SAGA,
-} from "../../constants/Cyberbugs/Cyberbug";
+} from "../../constants/Cyberbugs/Cyberbug.js";
 import {
   DiSPLAY_LOADING,
   HIDE_LOADING,

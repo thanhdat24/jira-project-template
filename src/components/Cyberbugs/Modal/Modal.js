@@ -1,10 +1,12 @@
 import {
   GET_ALL_PRIORITY_SAGA,
+  GET_ALL_TASK_TYPE_SAGA,
   UPDATE_STATUS_TASK_SAGA,
-} from "../../../redux/constants/Cyberbugs/Cyberbug";
+} from "../../../redux/constants/Cyberbugs/Cyberbug.js";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { CHANGE_TASK_MODAL } from "../../../redux/constants/Cyberbugs/Cyberbug";
 import { GET_ALL_STATUS_SAGA } from "../../../redux/constants/Cyberbugs/StatusConstants";
 import ReactHtmlParser from "react-html-parser";
 
@@ -13,11 +15,14 @@ export default function Modal(props) {
   const { taskDetailModal } = useSelector((state) => state.TaskReducer);
   const { arrStatus } = useSelector((state) => state.StatusReducer);
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
+  const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
+
   console.log("lstTaskDeTail", taskDetailModal);
 
   useEffect(() => {
     dispatch({ type: GET_ALL_STATUS_SAGA });
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
+    dispatch({ type: GET_ALL_TASK_TYPE_SAGA });
   }, []);
   const renderDescription = () => {
     return ReactHtmlParser(taskDetailModal.description);
@@ -28,31 +33,60 @@ export default function Modal(props) {
     const valueMax = Number(timeTrackingSpent) + Number(timeTrackingRemaining);
     const averageWidth = Math.round(Number(timeTrackingSpent / valueMax) * 100);
     return (
-      <div style={{ display: "flex" }}>
-        <i className="fa fa-clock" />
-        <div style={{ width: "100%" }}>
-          <div className="progress">
+      <div>
+        <div style={{ display: "flex" }}>
+          <i className="fa fa-clock" />
+          <div style={{ width: "100%" }}>
+            <div className="progress">
+              <div
+                className="progress-bar"
+                role="progressbar"
+                style={{ width: `${averageWidth}%` }}
+                aria-valuenow={timeTrackingSpent}
+                aria-valuemin={timeTrackingRemaining}
+                aria-valuemax={valueMax}
+              />
+            </div>
             <div
-              className="progress-bar"
-              role="progressbar"
-              style={{ width: `${averageWidth}%` }}
-              aria-valuenow={timeTrackingSpent}
-              aria-valuemin={timeTrackingRemaining}
-              aria-valuemax={valueMax}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <p className="logged">{timeTrackingSpent}h logged</p>
+              <p className="estimate-time">
+                {timeTrackingRemaining}h estimated
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <label>Time spent (h)</label>
+            <input
+              className="form-control time-spent"
+              name="timeTrackingSpent"
+              value={timeTrackingSpent}
+              onChange={handleChange}
             />
           </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <p className="logged">{timeTrackingSpent}h logged</p>
-            <p className="estimate-time">{timeTrackingRemaining}h estimated</p>
+          <div className="col-6">
+            <label>Time remaining (h)</label>
+            <input
+              className="form-control time-remaining"
+              name="timeTrackingRemaining"
+              value={timeTrackingRemaining}
+              onChange={handleChange}
+            />
           </div>
         </div>
       </div>
     );
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    dispatch({ type: CHANGE_TASK_MODAL, name, value });
   };
   return (
     <div>
@@ -110,8 +144,20 @@ export default function Modal(props) {
           <div className="modal-content">
             <div className="modal-header">
               <div className="task-title">
-                <i className="fa fa-bookmark" />
-                <span>TASK-217871</span>
+                <i className="fa fa-bookmark mr-2" />
+                <select
+                  name="typeId"
+                  value={taskDetailModal.typeId}
+                  onChange={handleChange}
+                >
+                  {arrTaskType?.map((task, index) => {
+                    return (
+                      <option key={index} value={task.id}>
+                        {task.taskType}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
               <div style={{ display: "flex" }} className="task-click">
                 <div>
@@ -251,24 +297,27 @@ export default function Modal(props) {
                     <div className="status">
                       <h6>STATUS</h6>
                       <select
+                        name="statusId"
                         style={{ cursor: "pointer" }}
                         className="custom-select"
                         value={taskDetailModal.statusId}
                         onChange={(e) => {
-                          const action = {
-                            type: UPDATE_STATUS_TASK_SAGA,
-                            taskStatusUpdate: {
-                              taskId: taskDetailModal.taskId,
-                              statusId: e.target.value,
-                              projectId: taskDetailModal.projectId,
-                            },
-                          };
-                          // console.log("action", action);
-                          // console.log("taskStatusUpdate", {
-                          //   taskId: taskDetailModal.taskId,
-                          //   statusId: e.target.value,
-                          // });
-                          dispatch(action);
+                          handleChange(e);
+                          // UPDATE TASK
+                          // const action = {
+                          //   type: UPDATE_STATUS_TASK_SAGA,
+                          //   taskStatusUpdate: {
+                          //     taskId: taskDetailModal.taskId,
+                          //     statusId: e.target.value,
+                          //     projectId: taskDetailModal.projectId,
+                          //   },
+                          // };
+                          // // console.log("action", action);
+                          // // console.log("taskStatusUpdate", {
+                          // //   taskId: taskDetailModal.taskId,
+                          // //   statusId: e.target.value,
+                          // // });
+                          // dispatch(action);
                         }}
                       >
                         {arrStatus.map((status, index) => {
@@ -339,10 +388,13 @@ export default function Modal(props) {
                     <div className="priority" style={{ marginBottom: 20 }}>
                       <h6>PRIORITY</h6>
                       <select
+                        name="priorityId"
                         style={{ cursor: "pointer" }}
                         className="form-control"
-                        value={taskDetailModal.priorityTask?.priorityId}
-                        onChange={(e) => {}}
+                        value={taskDetailModal.priorityId}
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
                       >
                         {arrPriority.map((item, index) => {
                           return (
@@ -356,10 +408,11 @@ export default function Modal(props) {
                     <div className="estimate">
                       <h6>ORIGINAL ESTIMATE (HOURS)</h6>
                       <input
+                        name="originalEstimate"
                         type="text"
                         className="estimate-hours"
                         value={taskDetailModal.originalEstimate}
-                        onChange={(e) => {}}
+                        onChange={handleChange}
                       />
                     </div>
                     <div className="time-tracking">
