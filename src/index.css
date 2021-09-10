@@ -372,12 +372,13 @@ li {
 }
 
 .modal-info .modal-body .issue {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 500;
 }
 
 .modal-info .modal-body .description p:first-child {
   margin-bottom: 5px;
+  font-size: 15px;
 }
 
 .input-comment {
@@ -409,11 +410,11 @@ li {
 }
 
 .item {
-  margin-right: 20px;
+  margin-right: 10px;
+  margin-bottom: 8px;
   background: #e9eaf0;
-  padding: 5px;
+  padding: 4px;
   border-radius: 5px;
-  flex-basis: 50%;
 }
 
 .item .avatar img {

@@ -1,8 +1,10 @@
 import {
   CLOSE_DRAWER,
   CREATE_TASK_SAGA,
-  GET_ALL_TASK_TYPE,
-  GET_ALL_TASK_TYPE_SAGA,
+  GET_PROJECT_DETAIL,
+  GET_TASK_DETAIL,
+  GET_TASK_DETAIL_SAGA,
+  UPDATE_STATUS_TASK_SAGA,
 } from "../../constants/Cyberbugs/Cyberbug";
 import {
   DiSPLAY_LOADING,
@@ -14,6 +16,7 @@ import { STATUS_CODE } from "../../../util/constants/settingSystem";
 import { notifiFunction } from "../../../util/Notification/Notification";
 import { taskService } from "../../../services/TaskService";
 
+/* CREATE TASK SAGA */
 function* createTaskSaga(action) {
   try {
     yield put({
@@ -24,7 +27,7 @@ function* createTaskSaga(action) {
       taskService.createTask(action.taskObject)
     );
     if (status === STATUS_CODE.SUCCESS) {
-      console.log("data", data);
+      // console.log("data", data);
     }
     notifiFunction("success", "Successfully!");
     yield put({
@@ -39,6 +42,52 @@ function* createTaskSaga(action) {
   });
 }
 
-export function* theoDoiCreateTaskSagaSaga() {
+export function* theoDoiCreateTaskSaga() {
   yield takeLatest(CREATE_TASK_SAGA, createTaskSaga);
+}
+
+/* GET TASK DETAIL SAGA */
+function* getTaskDetailSaga(action) {
+  const { taskId } = action;
+  console.log(action);
+  try {
+    const { data, status } = yield call(() =>
+      taskService.getTaskDetail(taskId)
+    );
+    if (status === STATUS_CODE.SUCCESS) {
+      // console.log("data", data);
+      yield put({ type: GET_TASK_DETAIL, taskDetailModal: data.content });
+    }
+  } catch (err) {
+    console.log(err);
+    console.log(err.response?.data);
+  }
+}
+
+export function* theoDoiGetTaskDetailSaga() {
+  yield takeLatest(GET_TASK_DETAIL_SAGA, getTaskDetailSaga);
+}
+
+/* UPDATE TASK SAGA */
+function* getUpdateTaskSaga(action) {
+  const { taskStatusUpdate } = action;
+  // Cập nhật api status cho task hiện tại (Task đang mở modal)
+  try {
+    const { data, status } = yield call(() =>
+      taskService.updateStatus(taskStatusUpdate)
+    );
+    // Sau khi success gọi lại GET_PROJECT API để sắp xếp lại thông tin các task
+    if (status === STATUS_CODE.SUCCESS) {
+      console.log("data", data);
+      // Load lại trang web
+      window.location.reload();
+    }
+  } catch (err) {
+    console.log(err);
+    console.log(err.response?.data);
+  }
+}
+
+export function* theoDoiUpdateTaskSaga() {
+  yield takeLatest(UPDATE_STATUS_TASK_SAGA, getUpdateTaskSaga);
 }

@@ -27,7 +27,9 @@ export function* rootSaga() {
     ProjectSaga.theoDoiGetAllProjectSaga(),
     TaskTypeSaga.theoDoiGetAllTaskTypeSaga(),
     PrioritySaga.theoDoiGetPrioritySaga(),
-    TaskSaga.theoDoiCreateTaskSagaSaga(),
+    TaskSaga.theoDoiCreateTaskSaga(),
+    TaskSaga.theoDoiGetTaskDetailSaga(),
+    TaskSaga.theoDoiUpdateTaskSaga(),
     StatusSaga.theoDoiGetAllStatusSaga(),
     // Nghiệp vụ ...
   ]);

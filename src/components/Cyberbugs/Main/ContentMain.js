@@ -1,6 +1,9 @@
+import { GET_TASK_DETAIL_SAGA } from "../../../redux/constants/Cyberbugs/Cyberbug";
 import React from "react";
+import { useDispatch } from "react-redux";
 
 export default function ContentMain(props) {
+  const dispatch = useDispatch();
   const { projectDetail } = props;
   const renderCardTaskList = () => {
     return projectDetail.lstTask?.map((lstTask, index) => {
@@ -12,7 +15,7 @@ export default function ContentMain(props) {
         >
           <div className="card-header">{lstTask.statusName}</div>
           <ul className="list-group list-group-flush">
-            {lstTask.lstTaskDeTail?.map((task, index) => {
+            {lstTask.lstTaskDeTail.map((task, index) => {
               return (
                 <li
                   key={index}
@@ -20,6 +23,12 @@ export default function ContentMain(props) {
                   data-toggle="modal"
                   data-target="#infoModal"
                   style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    dispatch({
+                      type: GET_TASK_DETAIL_SAGA,
+                      taskId: task.taskId,
+                    });
+                  }}
                 >
                   <p>{task.taskName}</p>
                   <div className="block" style={{ display: "flex" }}>

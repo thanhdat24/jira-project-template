@@ -1,31 +1,32 @@
+import {
+  GET_ALL_PRIORITY_SAGA,
+  UPDATE_STATUS_TASK_SAGA,
+} from "../../../redux/constants/Cyberbugs/Cyberbug";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { GET_ALL_PRIORITY_SAGA } from "../../../redux/constants/Cyberbugs/Cyberbug";
 import { GET_ALL_STATUS_SAGA } from "../../../redux/constants/Cyberbugs/StatusConstants";
 import ReactHtmlParser from "react-html-parser";
 
 export default function Modal(props) {
   const dispatch = useDispatch();
-  const { lstTaskDeTail } = useSelector((state) => state.TaskReducer);
+  const { taskDetailModal } = useSelector((state) => state.TaskReducer);
   const { arrStatus } = useSelector((state) => state.StatusReducer);
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
-  console.log("lstTaskDeTail", lstTaskDeTail);
+  console.log("lstTaskDeTail", taskDetailModal);
 
   useEffect(() => {
     dispatch({ type: GET_ALL_STATUS_SAGA });
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
   }, []);
   const renderDescription = () => {
-    return ReactHtmlParser(lstTaskDeTail.description);
+    return ReactHtmlParser(taskDetailModal.description);
   };
 
   const renderTimeTracking = () => {
-    const { timeTrackingSpent, timeTrackingRemaining } = lstTaskDeTail;
+    const { timeTrackingSpent, timeTrackingRemaining } = taskDetailModal;
     const valueMax = Number(timeTrackingSpent) + Number(timeTrackingRemaining);
-    const averageWidth = Math.round(
-      (Number(timeTrackingSpent) / valueMax) * 100
-    );
+    const averageWidth = Math.round(Number(timeTrackingSpent / valueMax) * 100);
     return (
       <div style={{ display: "flex" }}>
         <i className="fa fa-clock" />
@@ -140,7 +141,7 @@ export default function Modal(props) {
               <div className="container-fluid">
                 <div className="row">
                   <div className="col-8">
-                    <p className="issue">{lstTaskDeTail.taskName}</p>
+                    <p className="issue">{taskDetailModal.taskName}</p>
                     <div className="description">
                       <p>Description</p>
                       <p>{renderDescription()}</p>
@@ -191,26 +192,24 @@ export default function Modal(props) {
                         </div>
                         <div className="input-comment">
                           <input type="text" placeholder="Add a comment ..." />
-                          <p>
-                            <span style={{ fontWeight: 500, color: "gray" }}>
-                              Pro tip:
+                          <span style={{ fontWeight: 500, color: "gray" }}>
+                            Pro tip:
+                          </span>
+                          <span style={{ marginLeft: 5 }}>
+                            press
+                            <span
+                              style={{
+                                fontWeight: "bold",
+                                background: "rgb(223, 225, 230)",
+                                color: "rgb(23, 43, 77)",
+                                margin: "0px 4px",
+                                padding: " 0px 4px",
+                              }}
+                            >
+                              M
                             </span>
-                            <span style={{ marginLeft: 5 }}>
-                              press
-                              <span
-                                style={{
-                                  fontWeight: "bold",
-                                  background: "rgb(223, 225, 230)",
-                                  color: "rgb(23, 43, 77)",
-                                  margin: "0px 4px",
-                                  padding: " 0px 4px",
-                                }}
-                              >
-                                M
-                              </span>
-                              to comment
-                            </span>
-                          </p>
+                            to comment
+                          </span>
                         </div>
                       </div>
                       <div className="lastest-comment">
@@ -252,9 +251,25 @@ export default function Modal(props) {
                     <div className="status">
                       <h6>STATUS</h6>
                       <select
+                        style={{ cursor: "pointer" }}
                         className="custom-select"
-                        value={lstTaskDeTail.statusId}
-                        onChange={(e) => {}}
+                        value={taskDetailModal.statusId}
+                        onChange={(e) => {
+                          const action = {
+                            type: UPDATE_STATUS_TASK_SAGA,
+                            taskStatusUpdate: {
+                              taskId: taskDetailModal.taskId,
+                              statusId: e.target.value,
+                              projectId: taskDetailModal.projectId,
+                            },
+                          };
+                          // console.log("action", action);
+                          // console.log("taskStatusUpdate", {
+                          //   taskId: taskDetailModal.taskId,
+                          //   statusId: e.target.value,
+                          // });
+                          dispatch(action);
+                        }}
                       >
                         {arrStatus.map((status, index) => {
                           return (
@@ -265,34 +280,56 @@ export default function Modal(props) {
                         })}
                       </select>
                     </div>
-                    <div className="assignees">
+                    <div className="assignees" style={{ marginBottom: 15 }}>
                       <h6>ASSIGNEES</h6>
-                      <div style={{ display: "flex" }}>
-                        {lstTaskDeTail.assigness?.map((user, index) => {
+                      <div
+                        style={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          alignItems: "center",
+                          webkitBoxAlign: "center",
+                        }}
+                      >
+                        {taskDetailModal.assigness?.map((user, index) => {
                           return (
                             <div
                               key={index}
-                              style={{ display: "flex" }}
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                cursor: "pointer",
+                              }}
                               className="item"
                             >
                               <div className="avatar">
                                 <img src={user.avatar} alt={user.avatar} />
                               </div>
-                              <p className="name mt-1 ml-1">
+                              <p className="name mt-1 ml-2">
                                 {user.name}
                                 <i
                                   className="fa fa-times"
-                                  style={{ marginLeft: 5 }}
+                                  style={{ margin: " 0 10px " }}
                                 />
                               </p>
                             </div>
                           );
                         })}
 
-                        <div style={{ display: "flex", alignItems: "center" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            color: "rgb(0, 82, 204)",
+                            fontWeight: "400",
+                            cursor: "pointer",
+                          }}
+                        >
                           <i
                             className="fa fa-plus"
-                            style={{ marginRight: 5 }}
+                            style={{
+                              marginRight: 5,
+                              fontSize: "13",
+                            }}
                           />
                           <span>Add more</span>
                         </div>
@@ -302,8 +339,9 @@ export default function Modal(props) {
                     <div className="priority" style={{ marginBottom: 20 }}>
                       <h6>PRIORITY</h6>
                       <select
+                        style={{ cursor: "pointer" }}
                         className="form-control"
-                        value={lstTaskDeTail.priorityTask?.priorityId}
+                        value={taskDetailModal.priorityTask?.priorityId}
                         onChange={(e) => {}}
                       >
                         {arrPriority.map((item, index) => {
@@ -317,11 +355,11 @@ export default function Modal(props) {
                     </div>
                     <div className="estimate">
                       <h6>ORIGINAL ESTIMATE (HOURS)</h6>
-
                       <input
                         type="text"
                         className="estimate-hours"
-                        value={lstTaskDeTail.originalEstimate}
+                        value={taskDetailModal.originalEstimate}
+                        onChange={(e) => {}}
                       />
                     </div>
                     <div className="time-tracking">

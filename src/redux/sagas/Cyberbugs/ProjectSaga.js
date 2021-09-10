@@ -5,8 +5,8 @@ import {
   GET_ALL_PROJECT_SAGA,
   GET_LIST_PROJECT,
   GET_LIST_PROJECT_SAGA,
+  GET_PROJECT_DETAIL,
   GET_PROJECT_DETAIL_SAGA,
-  PUT_PROJECT_DETAIL,
   UPDATE_PROJECT_SAGA,
 } from "../../constants/Cyberbugs/Cyberbug";
 import {
@@ -154,10 +154,12 @@ function* getProjectDetailSaga(action) {
       cyberbugsService.getProjectDetail(action.projectId)
     );
     // Lấy api thành công thì đưa dữ liệu lên redux
-    yield put({
-      type: PUT_PROJECT_DETAIL,
-      projectDetail: data.content,
-    });
+    if (status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: GET_PROJECT_DETAIL,
+        projectDetail: data.content,
+      });
+    }
   } catch (err) {
     console.log(err.response.data);
     history.push("/projectmanagement");
