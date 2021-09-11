@@ -3,10 +3,12 @@ import {
   GET_ALL_TASK_TYPE_SAGA,
   UPDATE_STATUS_TASK_SAGA,
 } from "../../../redux/constants/Cyberbugs/Cyberbug.js";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { Button } from "antd";
 import { CHANGE_TASK_MODAL } from "../../../redux/constants/Cyberbugs/Cyberbug";
+import { Editor } from "@tinymce/tinymce-react";
 import { GET_ALL_STATUS_SAGA } from "../../../redux/constants/Cyberbugs/StatusConstants";
 import ReactHtmlParser from "react-html-parser";
 
@@ -16,7 +18,12 @@ export default function Modal(props) {
   const { arrStatus } = useSelector((state) => state.StatusReducer);
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
   const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
-
+  // Mãng kh phải obj
+  const [visibleEditor, setVisibleEditor] = useState(false);
+  const [historyContent, setHistoryContent] = useState(
+    taskDetailModal.description
+  );
+  const [content, setContent] = useState(taskDetailModal.description);
   console.log("lstTaskDeTail", taskDetailModal);
 
   useEffect(() => {
@@ -25,7 +32,74 @@ export default function Modal(props) {
     dispatch({ type: GET_ALL_TASK_TYPE_SAGA });
   }, []);
   const renderDescription = () => {
-    return ReactHtmlParser(taskDetailModal.description);
+    const jsxDescription = ReactHtmlParser(taskDetailModal.description);
+    return (
+      <div>
+        {visibleEditor ? (
+          <div>
+            <Editor
+              name="description"
+              initialValue={taskDetailModal.description}
+              init={{
+                height: 180,
+                menubar: false,
+                plugins: [
+                  "advlist autolink lists link image",
+                  "charmap print preview anchor help",
+                  "searchreplace visualblocks code",
+                  "insertdatetime media table paste wordcount",
+                ],
+                toolbar:
+                  "undo redo | formatselect | " +
+                  "bold italic backcolor | alignleft aligncenter " +
+                  "alignright alignjustify | bullist numlist outdent indent | " +
+                  "removeformat | help",
+              }}
+              onEditorChange={(content, editor) => {
+                setContent(content);
+              }}
+            />
+            <div style={{ paddingTop: "12px" }}>
+              <Button
+                onClick={() => {
+                  dispatch({
+                    type: CHANGE_TASK_MODAL,
+                    name: "description",
+                    value: content,
+                  });
+                  setVisibleEditor(false);
+                }}
+                style={{ marginRight: "5px" }}
+                type="primary"
+              >
+                Save
+              </Button>
+              <Button
+                onClick={() => {
+                  dispatch({
+                    type: CHANGE_TASK_MODAL,
+                    name: "description",
+                    value: historyContent,
+                  });
+                  setVisibleEditor(false);
+                }}
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div
+            onClick={() => {
+              setHistoryContent(taskDetailModal.description);
+              setVisibleEditor(!visibleEditor);
+            }}
+          >
+            {jsxDescription}
+          </div>
+        )}
+      </div>
+    );
   };
 
   const renderTimeTracking = () => {
@@ -192,10 +266,10 @@ export default function Modal(props) {
                       <p>Description</p>
                       <p>{renderDescription()}</p>
                     </div>
-                    <div style={{ fontWeight: 500, marginBottom: 10 }}>
+                    {/* <div style={{ fontWeight: 500, marginBottom: 10 }}>
                       Jira Software (software projects) issue types:
-                    </div>
-                    <div className="title">
+                    </div> */}
+                    {/* <div className="title">
                       <div className="title-item">
                         <h3>
                           BUG <span>🐞</span>
@@ -220,7 +294,7 @@ export default function Modal(props) {
                         </h3>
                         <p>A task represents work that needs to be done</p>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="comment">
                       <h6>Comment</h6>
                       <div
