@@ -18,11 +18,13 @@ export default function Modal(props) {
   const { arrStatus } = useSelector((state) => state.StatusReducer);
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
   const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
-  // Mãng kh phải obj
+  // Mãng kh phải obj , bật tắt Editor
   const [visibleEditor, setVisibleEditor] = useState(false);
+  // giữ lại content lúc chính sửa ban đầu để kh làm thay đổi value
   const [historyContent, setHistoryContent] = useState(
     taskDetailModal.description
   );
+  // content chỉnh sửa trước khi save
   const [content, setContent] = useState(taskDetailModal.description);
   console.log("lstTaskDeTail", taskDetailModal);
 
@@ -62,11 +64,14 @@ export default function Modal(props) {
             <div style={{ paddingTop: "12px" }}>
               <Button
                 onClick={() => {
+                  // onClick save dispatch  CHANGE_TASK_MODAL with value: content input
                   dispatch({
                     type: CHANGE_TASK_MODAL,
                     name: "description",
+                    // content input
                     value: content,
                   });
+                  // close Editor
                   setVisibleEditor(false);
                 }}
                 style={{ marginRight: "5px" }}
@@ -75,12 +80,15 @@ export default function Modal(props) {
                 Save
               </Button>
               <Button
+                // onClick  Cancel dispatch CHANGE_TASK_MODAL with value: historyContent
                 onClick={() => {
                   dispatch({
                     type: CHANGE_TASK_MODAL,
                     name: "description",
+                    // giữ lại content lúc chỉnh sửa ban đầu để kh làm thay đổi value
                     value: historyContent,
                   });
+                  // close Editor
                   setVisibleEditor(false);
                 }}
               >
@@ -91,8 +99,10 @@ export default function Modal(props) {
         ) : (
           <div
             onClick={() => {
+              // khi người dùng bấm Cancel thì jsxDescription vẫn giữ lại value lúc đang chỉnh sửa
               setHistoryContent(taskDetailModal.description);
-              setVisibleEditor(!visibleEditor);
+              // Open Editor
+              setVisibleEditor(true);
             }}
           >
             {jsxDescription}
