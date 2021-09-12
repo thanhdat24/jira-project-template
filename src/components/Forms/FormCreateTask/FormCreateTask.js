@@ -230,7 +230,7 @@ function FormCreateTask(props) {
                   ...timeTracking,
                   timeTrackingRemaining: e.target.value,
                 });
-                setFieldValue("timeTrackingSpent", e.target.value);
+                setFieldValue("timeTrackingRemaining", e.target.value);
               }}
             />
           </div>

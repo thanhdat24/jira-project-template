@@ -410,7 +410,7 @@ li {
 }
 
 .item {
-  margin-right: 10px;
+  margin-right: 4px;
   margin-bottom: 8px;
   background: #e9eaf0;
   padding: 4px;
@@ -543,4 +543,20 @@ li {
 /* ----------- Form Create Task ------------ */
 .FormCreateTask-Project label {
   font-weight: bold;
+}
+
+/* ASSIGNEES ADD MORE*/
+.assignees__member {
+  margin-left: 10px;
+  margin-bottom: 2px;
+}
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border: none !important;
+}
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+  padding: 0 !important;
+}
+
+.ant-select-arrow {
+  display: none !important;
 }

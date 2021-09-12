@@ -1,7 +1,8 @@
 import {
+  CHANGE_ASSIGNEES,
   GET_ALL_PRIORITY_SAGA,
   GET_ALL_TASK_TYPE_SAGA,
-  UPDATE_STATUS_TASK_SAGA,
+  REMOVE_USER_ASSIGNEES,
 } from "../../../redux/constants/Cyberbugs/Cyberbug.js";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,13 +12,16 @@ import { CHANGE_TASK_MODAL } from "../../../redux/constants/Cyberbugs/Cyberbug";
 import { Editor } from "@tinymce/tinymce-react";
 import { GET_ALL_STATUS_SAGA } from "../../../redux/constants/Cyberbugs/StatusConstants";
 import ReactHtmlParser from "react-html-parser";
+import { Select } from "antd";
 
 export default function Modal(props) {
+  const [size, setSize] = React.useState("default");
   const dispatch = useDispatch();
   const { taskDetailModal } = useSelector((state) => state.TaskReducer);
   const { arrStatus } = useSelector((state) => state.StatusReducer);
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
   const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
+  const { projectDetail } = useSelector((state) => state.ProjectDetailReducer);
   // Mãng kh phải obj , bật tắt Editor
   const [visibleEditor, setVisibleEditor] = useState(false);
   // giữ lại content lúc chính sửa ban đầu để kh làm thay đổi value
@@ -27,12 +31,35 @@ export default function Modal(props) {
   // content chỉnh sửa trước khi save
   const [content, setContent] = useState(taskDetailModal.description);
   console.log("lstTaskDeTail", taskDetailModal);
-
+  const divContent = () => {
+    return (
+      <div
+        className="a"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          color: "rgb(0, 82, 204)",
+          fontWeight: "400",
+          cursor: "pointer",
+        }}
+      >
+        <i
+          className="fa fa-plus"
+          style={{
+            marginRight: 5,
+            fontSize: "13",
+          }}
+        />
+        <a>Add more</a>
+      </div>
+    );
+  };
   useEffect(() => {
     dispatch({ type: GET_ALL_STATUS_SAGA });
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
     dispatch({ type: GET_ALL_TASK_TYPE_SAGA });
   }, []);
+
   const renderDescription = () => {
     const jsxDescription = ReactHtmlParser(taskDetailModal.description);
     return (
@@ -101,6 +128,7 @@ export default function Modal(props) {
             onClick={() => {
               // khi người dùng bấm Cancel thì jsxDescription vẫn giữ lại value lúc đang chỉnh sửa
               setHistoryContent(taskDetailModal.description);
+
               // Open Editor
               setVisibleEditor(true);
             }}
@@ -276,35 +304,7 @@ export default function Modal(props) {
                       <p>Description</p>
                       <p>{renderDescription()}</p>
                     </div>
-                    {/* <div style={{ fontWeight: 500, marginBottom: 10 }}>
-                      Jira Software (software projects) issue types:
-                    </div> */}
-                    {/* <div className="title">
-                      <div className="title-item">
-                        <h3>
-                          BUG <span>🐞</span>
-                        </h3>
-                        <p>
-                          A bug is a problem which impairs or prevents the
-                          function of a product.
-                        </p>
-                      </div>
-                      <div className="title-item">
-                        <h3>
-                          STORY <span>📗</span>
-                        </h3>
-                        <p>
-                          A user story is the smallest unit of work that needs
-                          to be done.
-                        </p>
-                      </div>
-                      <div className="title-item">
-                        <h3>
-                          TASK <span>🗳</span>
-                        </h3>
-                        <p>A task represents work that needs to be done</p>
-                      </div>
-                    </div> */}
+
                     <div className="comment">
                       <h6>Comment</h6>
                       <div
@@ -358,15 +358,17 @@ export default function Modal(props) {
                               />
                             </div>
                             <div>
-                              <p style={{ marginBottom: 5 }}>
-                                Lord Gaben <span>a month ago</span>
-                              </p>
-                              <p style={{ marginBottom: 5 }}>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Repellendus tempora ex
-                                voluptatum saepe ab officiis alias totam ad
-                                accusamus molestiae?
-                              </p>
+                              <div>
+                                <p style={{ marginBottom: 5 }}>
+                                  Lord Gaben <span>a month ago</span>
+                                </p>
+                                <p style={{ marginBottom: 5 }}>
+                                  Lorem ipsum dolor sit amet, consectetur
+                                  adipisicing elit. Repellendus tempora ex
+                                  voluptatum saepe ab officiis alias totam ad
+                                  accusamus molestiae?
+                                </p>
+                              </div>
                               <div>
                                 <span style={{ color: "#929398" }}>Edit</span>•
                                 <span style={{ color: "#929398" }}>Delete</span>
@@ -437,7 +439,15 @@ export default function Modal(props) {
                               <div className="avatar">
                                 <img src={user.avatar} alt={user.avatar} />
                               </div>
-                              <p className="name mt-1 ml-2">
+                              <p
+                                className="name mt-1 ml-2"
+                                onClick={() => {
+                                  dispatch({
+                                    type: REMOVE_USER_ASSIGNEES,
+                                    userId: user.id,
+                                  });
+                                }}
+                              >
                                 {user.name}
                                 <i
                                   className="fa fa-times"
@@ -448,23 +458,45 @@ export default function Modal(props) {
                           );
                         })}
 
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            color: "rgb(0, 82, 204)",
-                            fontWeight: "400",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <i
-                            className="fa fa-plus"
+                        <div className="assignees__member">
+                          <Select
+                            name="lstUser"
                             style={{
-                              marginRight: 5,
-                              fontSize: "13",
+                              width: "100%",
                             }}
-                          />
-                          <span>Add more</span>
+                            // placeholder="Search"
+                            options={projectDetail.members
+                              ?.filter((member) => {
+                                let index =
+                                  taskDetailModal?.assigness.findIndex(
+                                    (user) => user.id === member.userId
+                                  );
+                                return index !== -1 ? false : true;
+                              })
+                              ?.map((member, index) => {
+                                return {
+                                  label: member.name,
+                                  value: member.userId.toString(),
+                                };
+                              })}
+                            value={divContent()}
+                            optionFilterProp="label"
+                            onSelect={(value) => {
+                              const userSelect = projectDetail.members.find(
+                                // userId là số, value là chuỗi nên sd 2 dấu ==
+                                (member) => member.userId == value
+                              );
+                              const userSelected = {
+                                ...userSelect,
+                                id: userSelect.userId,
+                              };
+                              // dispatch reducer
+                              dispatch({
+                                type: CHANGE_ASSIGNEES,
+                                userSelected,
+                              });
+                            }}
+                          ></Select>
                         </div>
                       </div>
                     </div>
