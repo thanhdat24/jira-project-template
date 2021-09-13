@@ -145,10 +145,10 @@ export function* theoDoiDeleteProjectSaga() {
 
 // ----Get Project Detail----
 function* getProjectDetailSaga(action) {
-  yield put({
-    type: DiSPLAY_LOADING,
-  });
-  yield delay(500);
+  // yield put({
+  //   type: DiSPLAY_LOADING,
+  // });
+  // yield delay(500);
   try {
     const { data, status } = yield call(() =>
       cyberbugsService.getProjectDetail(action.projectId)
@@ -164,9 +164,9 @@ function* getProjectDetailSaga(action) {
     console.log(err.response.data);
     history.push("/projectmanagement");
   }
-  yield put({
-    type: HIDE_LOADING,
-  });
+  // yield put({
+  //   type: HIDE_LOADING,
+  // });
 }
 export function* theoDoiGetProjectDetailSaga() {
   yield takeLatest(GET_PROJECT_DETAIL_SAGA, getProjectDetailSaga);

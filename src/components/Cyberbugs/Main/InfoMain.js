@@ -15,6 +15,7 @@ export default function InfoMain(props) {
   };
   return (
     <Fragment>
+      <h3>{projectDetail.projectName}</h3>
       <section>{ReactHtmlParser(projectDetail.description)}</section>
       <div className="info" style={{ display: "flex" }}>
         <div className="search-block">

@@ -2,6 +2,7 @@ import {
   CHANGE_ASSIGNEES,
   GET_ALL_PRIORITY_SAGA,
   GET_ALL_TASK_TYPE_SAGA,
+  HANDLE_CHANGE_POST_API_SAGA,
   REMOVE_USER_ASSIGNEES,
 } from "../../../redux/constants/Cyberbugs/Cyberbug.js";
 import React, { useEffect, useState } from "react";
@@ -91,13 +92,20 @@ export default function Modal(props) {
             <div style={{ paddingTop: "12px" }}>
               <Button
                 onClick={() => {
-                  // onClick save dispatch  CHANGE_TASK_MODAL with value: content input
                   dispatch({
-                    type: CHANGE_TASK_MODAL,
+                    type: HANDLE_CHANGE_POST_API_SAGA,
+                    actionType: CHANGE_TASK_MODAL,
                     name: "description",
-                    // content input
                     value: content,
                   });
+
+                  // onClick save dispatch  CHANGE_TASK_MODAL with value: content input
+                  // dispatch({
+                  //   type: CHANGE_TASK_MODAL,
+                  //   name: "description",
+                  //   // content input
+                  //   value: content,
+                  // });
                   // close Editor
                   setVisibleEditor(false);
                 }}
@@ -110,11 +118,18 @@ export default function Modal(props) {
                 // onClick  Cancel dispatch CHANGE_TASK_MODAL with value: historyContent
                 onClick={() => {
                   dispatch({
-                    type: CHANGE_TASK_MODAL,
+                    type: HANDLE_CHANGE_POST_API_SAGA,
+                    actionType: CHANGE_TASK_MODAL,
                     name: "description",
-                    // giữ lại content lúc chỉnh sửa ban đầu để kh làm thay đổi value
                     value: historyContent,
                   });
+
+                  // dispatch({
+                  //   type: CHANGE_TASK_MODAL,
+                  //   name: "description",
+                  //   // giữ lại content lúc chỉnh sửa ban đầu để kh làm thay đổi value
+                  //   value: historyContent,
+                  // });
                   // close Editor
                   setVisibleEditor(false);
                 }}
@@ -198,7 +213,13 @@ export default function Modal(props) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    dispatch({ type: CHANGE_TASK_MODAL, name, value });
+    dispatch({
+      type: HANDLE_CHANGE_POST_API_SAGA,
+      actionType: CHANGE_TASK_MODAL,
+      name,
+      value,
+    });
+    // dispatch({ type: CHANGE_TASK_MODAL, name, value });
   };
   return (
     <div>
@@ -389,21 +410,6 @@ export default function Modal(props) {
                         value={taskDetailModal.statusId}
                         onChange={(e) => {
                           handleChange(e);
-                          // UPDATE TASK
-                          // const action = {
-                          //   type: UPDATE_STATUS_TASK_SAGA,
-                          //   taskStatusUpdate: {
-                          //     taskId: taskDetailModal.taskId,
-                          //     statusId: e.target.value,
-                          //     projectId: taskDetailModal.projectId,
-                          //   },
-                          // };
-                          // // console.log("action", action);
-                          // // console.log("taskStatusUpdate", {
-                          // //   taskId: taskDetailModal.taskId,
-                          // //   statusId: e.target.value,
-                          // // });
-                          // dispatch(action);
                         }}
                       >
                         {arrStatus.map((status, index) => {
@@ -443,9 +449,15 @@ export default function Modal(props) {
                                 className="name mt-1 ml-2"
                                 onClick={() => {
                                   dispatch({
-                                    type: REMOVE_USER_ASSIGNEES,
+                                    type: HANDLE_CHANGE_POST_API_SAGA,
+                                    actionType: REMOVE_USER_ASSIGNEES,
                                     userId: user.id,
                                   });
+
+                                  // dispatch({
+                                  //   type: REMOVE_USER_ASSIGNEES,
+                                  //   userId: user.id,
+                                  // });
                                 }}
                               >
                                 {user.name}
@@ -490,11 +502,17 @@ export default function Modal(props) {
                                 ...userSelect,
                                 id: userSelect.userId,
                               };
-                              // dispatch reducer
                               dispatch({
-                                type: CHANGE_ASSIGNEES,
+                                type: HANDLE_CHANGE_POST_API_SAGA,
+                                actionType: CHANGE_ASSIGNEES,
                                 userSelected,
                               });
+
+                              // dispatch reducer
+                              // dispatch({
+                              //   type: CHANGE_ASSIGNEES,
+                              //   userSelected,
+                              // });
                             }}
                           ></Select>
                         </div>
